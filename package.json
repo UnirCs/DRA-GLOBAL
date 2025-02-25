@@ -1,0 +1,14 @@
+{
+  "name": "web-animation",
+  "version": "1.0.0",
+  "description": "Codigo de soporte para la asignatura de Desarrollo de Recursos Animados para Web",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve"
+  },
+  "author": "Joseba Alonso",
+  "license": "MIT",
+  "dependencies": {
+    "serve": "^14.2.4"
+  }
+}
