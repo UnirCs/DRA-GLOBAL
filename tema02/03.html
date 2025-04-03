@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Transform Origin</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: #E5F6FB;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: sans-serif;
+        }
+
+        .container {
+            display: flex;
+            gap: 80px;
+        }
+
+        .outer {
+            border: 1px dashed #FFA25B;
+            width: 150px;
+            height: 150px;
+            position: relative;
+        }
+
+        .box {
+            width: 150px;
+            height: 150px;
+            background-color: #0098CE;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.4s ease;
+        }
+
+        /* Centro (por defecto) */
+        .box1 {
+            transform: rotate(45deg);
+        }
+
+        /* Superior izquierda */
+        .box2 {
+            transform: rotate(45deg);
+            transform-origin: top left;
+        }
+
+        /* Inferior derecha */
+        .box3 {
+            transform: rotate(45deg);
+            transform-origin: bottom right;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="outer">
+        <div class="box box1">Centro</div>
+    </div>
+    <div class="outer">
+        <div class="box box2">Top Left</div>
+    </div>
+    <div class="outer">
+        <div class="box box3">Bottom Right</div>
+    </div>
+</div>
+</body>
+</html>

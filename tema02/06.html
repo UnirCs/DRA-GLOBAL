@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Comparativa de curvas de aceleración</title>
+  <style>
+    body {
+      background-color: #E5F6FB;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+      gap: 30px;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .label {
+      width: 120px;
+      text-align: right;
+      font-weight: bold;
+    }
+
+    .box {
+      width: 50px;
+      height: 50px;
+      background-color: #0098CE;
+      transition-property: transform;
+    }
+
+    /* Estado animado al pulsar el botón */
+    .animate {
+      transform: translateX(300px);
+    }
+
+    .linear     { transition-duration: 1s; transition-timing-function: linear; }
+    .ease       { transition-duration: 1s; transition-timing-function: ease; }
+    .ease-in    { transition-duration: 1s; transition-timing-function: ease-in; }
+    .ease-out   { transition-duration: 1s; transition-timing-function: ease-out; }
+    .ease-in-out{ transition-duration: 1s; transition-timing-function: ease-in-out; }
+  </style>
+</head>
+<body>
+
+  <button onclick="animateBoxes()">Iniciar animación</button>
+
+  <div class="row">
+    <div class="label">linear</div>
+    <div class="box linear"></div>
+  </div>
+  <div class="row">
+    <div class="label">ease</div>
+    <div class="box ease"></div>
+  </div>
+  <div class="row">
+    <div class="label">ease-in</div>
+    <div class="box ease-in"></div>
+  </div>
+  <div class="row">
+    <div class="label">ease-out</div>
+    <div class="box ease-out"></div>
+  </div>
+  <div class="row">
+    <div class="label">ease-in-out</div>
+    <div class="box ease-in-out"></div>
+  </div>
+
+  <script>
+    function animateBoxes() {
+      document.querySelectorAll('.box').forEach(box => {
+        box.classList.toggle('animate');
+      });
+    }
+  </script>
+
+</body>
+</html>

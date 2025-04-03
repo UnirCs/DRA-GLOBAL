@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Transformaciones 2D Interactivas</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #E5F6FB;
+            font-family: sans-serif;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(2, 100px);
+            gap: 100px;
+        }
+
+        .outer {
+            border: 1px dashed #FFA25B;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: #0098CE;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            transition: transform 0.5s ease;
+            cursor: pointer;
+        }
+
+        /* Transformaciones iniciales */
+        .box1 { transform: translateX(30px); }
+        .box2 { transform: translateY(30px); }
+        .box3 { transform: translate(30px, 30px); }
+        .box4 { transform: scale(0.8); }
+        .box5 { transform: rotate(15deg); }
+        .box6 { transform: skew(10deg, 5deg); }
+
+        /* Al hacer hover, se vuelve al estado original */
+        .box:hover {
+            transform: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="outer">
+        <div class="box box1">translateX</div>
+    </div>
+    <div class="outer">
+        <div class="box box2">translateY</div>
+    </div>
+    <div class="outer">
+        <div class="box box3">translate</div>
+    </div>
+    <div class="outer">
+        <div class="box box4">scale</div>
+    </div>
+    <div class="outer">
+        <div class="box box5">rotate</div>
+    </div>
+    <div class="outer">
+        <div class="box box6">skew</div>
+    </div>
+</div>
+</body>
+</html>

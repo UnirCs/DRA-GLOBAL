@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <style>
+        .container{
+            display: flex;
+            gap: 80px;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
+    <!-- Ejemplo 1: Hover rápido -->
+    <style>
+        .rapid-button {
+            background-color: #0098CE;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+
+        .rapid-button:hover {
+            transform: scale(1.1);
+        }
+    </style>
+    <!-- Ejemplo 2: Mostrar contenido en una tarjeta -->
+    <style>
+        .card {
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            background: #fff;
+            font-family: sans-serif;
+        }
+
+        .card button {
+            background-color: #0098CE;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .extra-content {
+            transform: scaleY(0);
+            transform-origin: top;
+            height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: transform 0.3s ease,
+                        height 0.3s ease,
+                        opacity 0.3s 0.2s ease;
+        }
+
+        .extra-content.show {
+            transform: scaleY(1);
+            height: 60px;
+            opacity: 1;
+        }
+    </style>
+
+    <!-- Ejemplo 3: Modal con transición lenta -->
+    <style>
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            opacity: 0;
+            pointer-events: none;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .modal {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            transform: scale(0.7);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .modal.show {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .modal-overlay.show {
+            pointer-events: all;
+            display: flex;
+            opacity: 1;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <button class="rapid-button">Guardar</button>
+
+    <div class="card">
+        <button onclick="toggleCard()">Ver más</button>
+        <div class="extra-content" id="cardContent">
+            <p>Este contenido se despliega con una animación media para facilitar su lectura.</p>
+        </div>
+    </div>
+
+    <button onclick="toggleModal()">Abrir modal</button>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <p>Este es un mensaje importante mostrado con una animación lenta.</p>
+            <button onclick="toggleModal()">Cerrar</button>
+        </div>
+    </div>
+</div>
+<!-- De momento ignoramos el JavaScript, lo explicaremos más adelante -->
+<script>
+    function toggleCard() {
+        const content = document.getElementById('cardContent');
+        content.classList.toggle('show');
+    }
+</script>
+
+<script>
+    function toggleModal() {
+        const overlay = document.getElementById('modalOverlay');
+        overlay.classList.toggle('show');
+        const modal = overlay.querySelector('.modal');
+        setTimeout(() => {
+            modal.classList.toggle('show');
+        }, 10);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orden de Transformaciones</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: #E5F6FB;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: sans-serif;
+        }
+
+        .container {
+            display: flex;
+            gap: 100px;
+        }
+
+        .outer {
+            border: 1px dashed #FFA25B;
+            width: 150px;
+            height: 150px;
+            position: relative;
+        }
+
+        .box {
+            width: 150px;
+            height: 150px;
+            background-color: #0098CE;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            transition: transform 0.5s ease;
+        }
+
+        /* Transformación 1: primero se rota, luego se traslada */
+        .box1 {
+            transform: rotate(45deg) translateX(50px);
+        }
+
+        /* Transformación 2: primero se traslada, luego se rota */
+        .box2 {
+            transform: translateX(50px) rotate(45deg);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="outer">
+        <div class="box box1">Rotar→Mover</div>
+    </div>
+    <div class="outer">
+        <div class="box box2">Mover→Rotar</div>
+    </div>
+</div>
+</body>
+</html>
