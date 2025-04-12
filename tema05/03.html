@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Transformaciones 3D en hover</title>
+    <style>
+        body {
+            background: #F0F4F8;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 4rem 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .escena {
+            display: flex;
+            gap: 2rem;
+            perspective: 800px;
+        }
+        .container {
+            perspective: 800px;
+        }
+        .cubo {
+            width: 120px;
+            height: 120px;
+            background: #0098CE;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: transform 0.8s ease, background-color 0.3s ease;
+            transform-style: preserve-3d;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .cubo:hover {
+            cursor: pointer;
+        }
+
+        /* Variantes con transformaciones distintas */
+        .container:hover .rotateX {
+            transform: rotateX(180deg);
+            background-color: #006A91;
+        }
+
+        .container:hover .rotateY {
+            transform: rotateY(180deg);
+            background-color: #006A91;
+        }
+
+        .container:hover .translateZ{
+            transform: translateZ(260px);
+            background-color: #006A91;
+        }
+    </style>
+</head>
+<body>
+
+<div class="escena">
+    <div class="container"><div class="cubo translateZ">translateZ</div></div>
+    <div class="container"><div class="cubo rotateX">rotateX</div></div>
+    <div class="container"> <div class="cubo rotateY">rotateY</div></div>
+</div>
+
+</body>
+</html>

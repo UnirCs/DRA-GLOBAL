@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Coreografiado en CSS</title>
+</head>
+<style>
+    :root {
+        --speed: 300ms;
+        --stagger: 150ms;
+    }
+    /* Estilos generales */
+    body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 2rem;
+        background: #f0f0f0;
+    }
+
+    button {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        background-color: #0098CE;
+        border: none;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    /* Overlay oculto inicialmente */
+    .overlay {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.85);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+    }
+
+    /* Se activa al hacer clic */
+    .overlay.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    /* Contenedor de cards */
+    .card-container {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        max-width: 800px;
+    }
+
+    /* Cards con animación escalonada */
+    .card {
+        width: 150px;
+        height: 200px;
+        background-color: white;
+        border-radius: 10px;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: aparecer var(--speed) 150ms ease-out forwards paused;
+    }
+    .overlay.active .card{
+        animation-play-state: running;
+    }
+    .card img {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+    }
+
+    /* Coreografía con delay */
+    .card.uno {
+        animation-delay: var(--stagger);
+    }
+    .card.dos {
+        animation-delay: calc(var(--stagger) * 2);
+    }
+    .card.tres {
+        animation-delay: calc(var(--stagger) * 3);
+    }
+    .card.cuatro {
+        animation-delay: calc(var(--stagger) * 4);
+    }
+
+    @keyframes aparecer {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+</style>
+<body>
+
+<button id="openOverlay">Mostrar tarjetas</button>
+
+<div class="overlay" id="overlay">
+    <div class="card-container">
+        <div class="card uno"><img src="https://picsum.photos/150/200/?1" /></div>
+        <div class="card dos"><img src="https://picsum.photos/150/200/?2" /></div>
+        <div class="card tres"><img src="https://picsum.photos/150/200/?3" /></div>
+        <div class="card cuatro"><img src="https://picsum.photos/150/200/?4" /></div>
+    </div>
+</div>
+<script>
+    document.getElementById("openOverlay").addEventListener("click", () => {
+        document.getElementById("overlay").classList.add("active");
+    });
+
+</script>
+</body>
+</html>

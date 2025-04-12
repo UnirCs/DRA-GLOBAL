@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Tarjeta giratoria 3D</title>
+    <style>
+        body {
+            background: #F0F4F8;
+            font-family: sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .escena {
+            perspective: 800px;
+            width: 250px;
+            height: 350px;
+        }
+
+        .tarjeta {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s ease;
+        }
+
+        .escena:hover .tarjeta {
+            transform: rotateY(180deg);
+        }
+
+        .cara {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 1rem;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .frente {
+            background: #0098CE;
+        }
+
+        .reverso {
+            background: #CE5B00;
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body>
+
+<div class="escena">
+    <div class="tarjeta">
+        <div class="cara frente">Frontal</div>
+        <div class="cara reverso">Reverso</div>
+    </div>
+</div>
+
+</body>
+</html>

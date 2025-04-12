@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html class="no-js" lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Spritesheet</title>
+	<style>
+		.playground{
+			display: flex;
+			height: 100vh;
+			justify-content: space-around;
+			align-items: center;
+		}
+		:root {
+			--base-time: 1s;
+			--time-scale: 1;
+			--animated-time: calc(var(--base-time) * var(--time-scale));
+		}
+		.sprite {
+			width: 100px;
+			height: 100px;
+			background: url(spritesheet.png) no-repeat 0 0;
+		}
+	</style>
+</head>
+<body>
+
+<div class="playground">
+	<div class="sprite" id="sprite"></div>
+</div>
+<script>
+	const sprite = document.getElementById('sprite');
+	const totalFrames = 44;
+	const frameWidth = 100;
+	const fps = 60; // Frames por segundo
+	let currentFrame = 0;
+
+	setInterval(() => {
+		const offset = -currentFrame * frameWidth;
+		sprite.style.backgroundPosition = `${offset}px 0`;
+		currentFrame = (currentFrame + 1) % totalFrames;
+	}, 1000/fps); // 100 ms por frame (10 FPS)
+
+</script>
+</body>
+</html>

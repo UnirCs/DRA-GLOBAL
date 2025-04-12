@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Transiciones entre vistas</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f0f0f0;
+            padding: 2rem;
+        }
+
+        button {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1.5rem;
+            background-color: #0098CE;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .view {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .view.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .view h1 {
+            font-size: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* Simulación de diferencia visual entre vistas */
+        #vista1 {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        #vista2 {
+            background-color: #e0f7fa;
+            padding: 2rem;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<button id="cambiar">Cambiar vista</button>
+
+<div id="vista1" class="view active">
+    <h1>Vista 1</h1>
+    <p>Esta es la primera vista de la aplicación.</p>
+</div>
+
+<div id="vista2" class="view">
+    <h1>Vista 2</h1>
+    <p>Esta es la segunda vista. La transición debe ser fluida.</p>
+</div>
+
+<script type="module">
+    const btn = document.getElementById('cambiar');
+    const vista1 = document.getElementById('vista1');
+    const vista2 = document.getElementById('vista2');
+
+    btn.addEventListener('click', () => {
+        if (!document.startViewTransition) {
+            // Fallback para navegadores no compatibles
+            vista1.classList.toggle('active');
+            vista2.classList.toggle('active');
+            return;
+        }
+
+        // Transición nativa con View Transitions API
+        document.startViewTransition(() => {
+            vista1.classList.toggle('active');
+            vista2.classList.toggle('active');
+        });
+    });
+</script>
+
+</body>
+</html>

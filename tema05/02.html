@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Tarjeta con sombra compuesta animada</title>
+    <style>
+        body {
+            background: #F0F4F8; /* neutro claro */
+            font-family: sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem 3rem;
+            border-radius: 1rem;
+            font-size: 1.2rem;
+            text-align: center;
+            box-shadow:
+                    0 4px 6px rgba(0, 0, 0, 0.08),
+                    0 8px 16px rgba(0, 0, 0, 0.12);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow:
+                    0 6px 12px rgba(0, 0, 0, 0.1),
+                    0 12px 24px rgba(0, 0, 0, 0.18);
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    ¡Activa tu cuenta ahora!
+</div>
+
+</body>
+</html>
