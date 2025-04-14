@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Animación spring siguiendo cursor</title>
+    <style>
+        .ball {
+            width: 20px;
+            height: 20px;
+            background-color: #0098CE;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+<div class="ball"></div>
+
+<script type="module">
+    import { animate, frame, motionValue } from "https://cdn.jsdelivr.net/npm/motion@12.6.0/+esm"
+
+    const ball = document.querySelector(".ball")
+
+    const { top, left, width, height } = ball.getBoundingClientRect()
+    const initialX = left + width / 2
+    const initialY = top + height / 2
+
+    const pointerX = motionValue(0)
+    const pointerY = motionValue(0)
+
+    function springToPointer() {
+        animate(
+            ball,
+            {
+                x: pointerX.get() - initialX,
+                y: pointerY.get() - initialY,
+            },
+            { type: "spring", stiffness: 100, damping: 10 }
+        )
+    }
+
+    function scheduleSpringToPointer() {
+        /**
+         * Al usar `frame.postRender`, logramos dos cosas:
+         * 1. La animación se disparará al final del ciclo de animación, dando
+         *    la oportunidad a cualquier animación de resorte existente de ejecutarse durante un fotograma y renderizarse.
+         * 2. Evitar que se dispare una animación nueva por cada movimiento del puntero,
+         *    ya que esto podría ser más frecuente que el ciclo de animación.
+         */
+        frame.postRender(springToPointer)
+    }
+
+    pointerX.on("change", scheduleSpringToPointer)
+    pointerY.on("change", scheduleSpringToPointer)
+
+    document.addEventListener("pointermove", (e) => {
+        pointerX.set(e.clientX)
+        pointerY.set(e.clientY)
+    })
+</script>
+</body>
+</html>
