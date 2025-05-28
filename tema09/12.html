@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Matter-js · Ejemplo mínimo (CDN)</title>
+    <style>
+        :root{
+            --color-primary:#0055ff;
+            --color-accent:#ff7b00;
+            --color-bg:#f5f7fa;
+        }
+        body{
+            margin:0;
+            background:var(--color-bg);
+            font-family:system-ui,sans-serif;
+        }
+
+        /* El motor insertará el <canvas> dentro de este div */
+        #escena{
+            width:100vw;
+            height:100vh;
+        }
+    </style>
+</head>
+<body>
+<div id="escena"></div>
+
+<!-- Matter-js desde CDN -->
+<script src="https://unpkg.com/matter-js@0.20.0/build/matter.min.js"></script>
+<script>
+    /* Aliases para mayor legibilidad */
+    const {
+        Engine, Render, Runner,
+        Bodies, Composite
+    } = Matter;
+
+    /* 1 · Instancia del motor */
+    const engine = Engine.create();
+    engine.gravity.y = 1;     // caída “terrestre”
+
+    /* 2 · Renderizador de referencia (Canvas 2D) */
+    const render = Render.create({
+        element: document.getElementById('escena'),
+        engine:  engine,
+        options: {
+            width:  innerWidth,
+            height: innerHeight,
+            wireframes: false,
+            background: '#f5f7fa'
+        }
+    });
+    Render.run(render);
+
+    /* 3 · Bucle (Runner) */
+    const runner = Runner.create();
+    Runner.run(runner, engine);
+
+    /* 4 · Cuerpos físicos */
+    const cajaA = Bodies.rectangle(400, 200, 80, 80, {
+        render:{ fillStyle:'#0055ff' }
+    });
+    const cajaB = Bodies.rectangle(450, 50, 80, 80, {
+        render:{ fillStyle:'#ff7b00' }
+    });
+    const suelo = Bodies.rectangle(400, innerHeight - 30, 810, 60, {
+        isStatic:true,
+        render:{ fillStyle:'#888' }
+    });
+
+    /* 5 · Añadir al mundo */
+    Composite.add(engine.world, [cajaA, cajaB, suelo]);
+
+    /* 6 · Redimensionado responsivo */
+    addEventListener('resize', () => {
+        render.canvas.width  = innerWidth;
+        render.canvas.height = innerHeight;
+
+        // Actualiza el suelo y vista
+        Matter.Body.setPosition(suelo, { x:innerWidth / 2, y:innerHeight - 30 });
+        Render.lookAt(render, {
+            min:{ x:0, y:0 },
+            max:{ x:innerWidth, y:innerHeight }
+        });
+    });
+</script>
+</body>
+</html>

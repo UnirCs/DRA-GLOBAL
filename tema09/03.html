@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>WAAPI - DocumentTimeline</title>
+    <style>
+        :root{
+            --color-primary:#0055ff;
+            --color-accent:#ff7b00;
+            --color-bg:#f5f7fa;
+        }
+        body{
+            margin:0;
+            height:100vh;
+            display:grid;
+            place-content:center;
+            background:var(--color-bg);
+            font-family:system-ui;
+        }
+        .stage{
+            width:340px;
+            height:120px;
+            border:2px dashed var(--color-accent);
+            position:relative;
+            overflow:hidden;
+        }
+        .box{
+            width:40px;
+            height:40px;
+            background:var(--color-primary);
+            border-radius:6px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="stage">
+    <div class="box"></div>
+</div>
+
+<script>
+    // Desfase de 1s a partir de "ahora"
+    const offset   = 1000; //ms
+    const timeline = new DocumentTimeline({ originTime: performance.now() + offset });
+
+    const box = document.querySelector('.box');
+
+    box.animate(
+        [
+            { transform:'translateX(0)' },
+            { transform:'translateX(300px)' },
+            { transform:'translate(300px, 80px)' },
+            { transform:'translate(0, 80px)' },
+            { transform:'translateX(0)' }
+        ],
+        {
+            duration: 2000,
+            easing: 'linear',
+            fill: 'forwards',
+            iterations: Infinity,
+            timeline
+        }
+    );
+</script>
+
+</body>
+</html>

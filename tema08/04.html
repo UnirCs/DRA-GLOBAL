@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<title>AniJS Accordion</title>
+<head>
+    <link rel="stylesheet" href="https://anijs.github.io/lib/anicollection/anicollection.css" />
+    <style>
+        body{
+            font-family: helvetica;
+            font-size: 1.5em;
+        }
+        /*The CSS example*/
+        .accordion {
+            width: 500px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: auto;
+        }
+
+        .accordion .item .heading {
+            height: 50px;
+            line-height: 50px;
+            font-size: 17px;
+            cursor: pointer;
+            color: #fff;
+            padding-left: 15px;
+            background-position: right 20px top -95px;
+            border-bottom: 1px solid #ec8484;
+            box-sizing: border-box;
+        }
+
+        .accordion .item .heading .fa-chevron-circle-down{
+            float: right;
+            padding: 15px;
+        }
+
+        .accordion .item.open .heading,
+        .accordion .item:last-child .heading {
+            border: 0;
+
+        }
+
+        .accordion .item.open .heading {
+            background-position: right 20px top -5px;
+        }
+
+        .accordion .item .content {
+            padding: 0px 20px;
+            background: #eee;
+            font-size: 14px;
+            height:0;
+            overflow:hidden;
+            color: #7f8c8d;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -ms-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .accordion .item.open .content {
+            height: 100px;
+            padding: 20px;
+        }
+
+        .orange{
+            background-color: #FBB44C;
+        }
+
+        .pink{
+            background-color: #FC797A;
+        }
+
+        .blue{
+            background-color: #3498db;
+        }
+    </style>
+</head>
+<body>
+
+<div class="accordion"
+     data-anijs="if: click, on: .heading, do: $removeClass open, to: .open;
+                 if: click, on: .heading, do: $toggleClass open, to: $parent target;">
+
+    <div class="item" data-anijs="if:mouseenter, on: .heading, do: pulse animated, to: $children target">
+        <div class="heading blue">
+            <i class="fa fa-bell"></i>
+            <span>Notifications</span>
+            <i class="fa fa-chevron-circle-down"></i>
+        </div>
+        <div class="content">Content of notifications</div>
+    </div>
+
+    <div class="item">
+        <div class="heading orange">
+            <i class="fa fa-camera"></i>
+            <span>Images</span>
+            <i class="fa fa-chevron-circle-down"></i>
+        </div>
+        <div class="content">Content of images</div>
+    </div>
+
+    <div class="item">
+        <div class="heading pink">
+            <i class="fa fa-music"></i>
+            <span>Music</span>
+            <i class="fa fa-chevron-circle-down"></i>
+        </div>
+        <div class="content">Content of music</div>
+    </div>
+
+</div>
+<!-- End example -->
+<script src="https://anijs.github.io/lib/anijs/anijs.js"></script>
+<script src="https://anijs.github.io/lib/anijs/helpers/dom/anijs-helper-dom.js"></script>
+</body>
+</html>

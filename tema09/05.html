@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Houdini Paint – Rayas diagonales animadas</title>
+    <style>
+        :root {
+            --color-primary: #0055ff;
+            --color-accent: #ff7b00;
+            --color-bg: #f5f7fa;
+        }
+
+        /* 1 — registramos la propiedad que animaremos */
+        @property --stripe-offset {
+            syntax: '<number>';
+            inherits: false;
+            initial-value: 0;
+        }
+
+        @property --stripe-w {
+            syntax: '<number>';
+            inherits: false;
+            initial-value: 8;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui;
+            background: var(--color-bg);
+            color: white;
+        }
+
+        .card {
+            width: min(90%, 400px);
+            margin: 4rem auto;
+            padding: 2rem 1.5rem;
+            border-radius: 12px;
+            background: paint(stripes);
+            /* parámetros del worklet */
+            --stripe-a: var(--color-primary);
+            --stripe-b: var(--color-accent);
+            --stripe-w: 8;
+            --stripe-offset: 0;
+            /* 2 — animación declarativa de la propiedad tipada */
+            animation: move-stripes 3s linear infinite;
+        }
+
+        /* cada vuelta desplaza las rayas el doble de su anchura */
+        @keyframes move-stripes {
+            to {
+                --stripe-offset: calc(var(--stripe-w) * 2);
+            }
+        }
+    </style>
+</head>
+<body>
+<article class="card">
+    <h2>Rayas Houdini en movimiento</h2>
+    <p>La posición de las líneas se anima mediante la propiedad <code>--stripe-offset</code>.</p>
+</article>
+
+<script>
+    /* carga del módulo Paint Worklet */
+    CSS.paintWorklet.addModule('stripes.js');
+</script>
+</body>
+</html>

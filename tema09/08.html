@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>GSAP - Timeline con etiqueta y solapes</title>
+    <style>
+        :root {
+            --color-primary: #0055ff;
+            --color-accent: #ff7b00;
+            --color-bg: #f5f7fa;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: grid;
+            place-content: center;
+            font-family: system-ui, sans-serif;
+            background: var(--color-bg);
+        }
+
+        .scene {
+            text-align: center;
+        }
+
+        h1, h2 {
+            margin: .25em 0;
+            color: var(--color-primary);
+        }
+
+        #box {
+            width: 120px;
+            height: 120px;
+            margin: 2rem auto 0;
+            background: var(--color-accent);
+            border-radius: 12px;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="scene">
+    <h1 id="t1">Primer título</h1>
+    <h2 id="t2">Subtítulo que entra desfasado</h2>
+    <div id="box"></div>
+</div>
+
+<!-- GSAP desde CDN -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<script>
+    /* Timeline con etiqueta, solape y desplazamiento relativo */
+    const tl = gsap.timeline({
+        defaults: {duration: 0.8, ease: 'power2.out'}
+    });
+
+    tl.addLabel('inicio')                             // marca el tiempo 0
+        .from('#t1', {y: 80, opacity: 0})               // empieza en 0 s
+        .from('#t2', {x: -60, opacity: 0}, '-=0.4')      // inicia 0.4 s antes de que acabe el anterior
+        .to('#box', {rotation: 360, opacity: 1}, 'inicio+=1');    // arranca 1 s después de la etiqueta
+</script>
+</body>
+</html>

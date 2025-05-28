@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>WAAPI – Hero scroll‑driven</title>
+    <style>
+        :root {
+            --color-primary: #0055ff;
+            --color-accent: #ff7b00;
+            --color-bg: #f5f7fa;
+        }
+
+        body {
+            margin: 0;
+            font-family: Helvetica, sans-serif;
+        }
+
+        .hero {
+            height: 100vh;
+            display: grid;
+            place-content: center;
+            font-size: clamp(2rem, 6vw, 6rem);
+            font-weight: 700;
+            color: #fff;
+            perspective: 800px;
+            background: url(https://picsum.photos/1000/600) no-repeat center/cover;
+        }
+
+        main {
+            height: 200vh;
+            background: var(--color-bg);
+        }
+
+        /* espacio para hacer scroll */
+    </style>
+</head>
+<body>
+
+<section class="hero">WAAPI Rocks!</section>
+<main></main>
+
+<script>
+    const hero = document.querySelector('.hero');
+
+    // Definimos la animación y la pausamos de inmediato
+    const anim = hero.animate(
+        [
+            {
+                transform: 'rotateX(60deg) scale(0.8)',
+            },
+            {
+                transform: 'rotateX(0deg)  scale(1.4)',
+            }
+        ],
+        {
+            duration: 1000,  // será nuestro rango 0‑100%
+            fill: 'both'
+        }
+    );
+    anim.pause();
+
+    // Utilidad para mapear 0–scrollMax → 0–duración
+    function update() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        const frac = scrollY / max;               // 0‑1
+        anim.currentTime = frac * anim.effect.getComputedTiming().duration;
+    }
+
+    update();              // posición inicial (por si abrimos en mitad de la página)
+    addEventListener('scroll', update, {passive: true});
+</script>
+
+</body>
+</html>
