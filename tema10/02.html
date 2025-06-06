@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Ejemplo 10.4.5 – Animación optimizada 60 FPS</title>
+
+    <style>
+        /* Caja animada */
+        #box{
+            width:80px;
+            height:80px;
+            background:#FFA25B;
+            position:absolute;
+            top:120px;
+            will-change:transform;       /* Promoción a capa → GPU */
+        }
+
+        /* Fondo degradado para comparar con 10.4.4 */
+        body{
+            height:100vh;
+            overflow:hidden;
+            background:linear-gradient(
+                    45deg,
+                    #0098CE,
+                    #5BC8EF
+            );
+            color:#333333;
+            font-family:system-ui, sans-serif;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+
+<script>
+    let x = 0;
+
+    const box = document.getElementById('box');
+
+    function moveFast(){
+        x += 4;
+        /* Solo compositing: no fuerza re-layout ni repaint */
+        box.style.transform = `translateX(${x}px)`;
+
+        if (x < 800) requestAnimationFrame(moveFast);
+    }
+
+    requestAnimationFrame(moveFast);
+</script>
+</body>
+</html>
