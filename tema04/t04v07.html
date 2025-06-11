@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spritesheet</title>
+    <style>
+        :root {
+            --sprite-size: 220px;
+            --sprite-frames: 20;
+            --sprite-speed: 0.5s;
+        }
+        .playground{
+            display: flex;
+            height: 100vh;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .sprite {
+            width: var(--sprite-size);
+            height: var(--sprite-size);
+            background: url(cerebro.png) no-repeat 0 0;
+            animation: play-sprite var(--sprite-speed) steps(var(--sprite-frames)) infinite;
+        }
+        @keyframes play-sprite {
+            from {
+                background-position: 0 0;
+            }
+            to {
+                background-position: calc(var(--sprite-size) * var(--sprite-frames) * -1) 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+</body>
+    <div class="playground">
+        <div class="sprite"></div>
+    </div>
+</html>
