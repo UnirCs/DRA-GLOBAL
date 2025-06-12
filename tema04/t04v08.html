@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html class="no-js" lang="es">
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>anim</title>
+    <title>Card animada</title>
     <style>
         * {
             margin: 0;
@@ -73,14 +73,14 @@
             margin: 0;
             opacity: 0;
             transform: translateX(20px);
-            transition: transform var(--super-fast-anim) 100ms ease-in,
-            opacity var(--super-fast-anim) 100ms ease-in;
+            transition: transform var(--super-fast-anim) 50ms ease-in,
+            opacity var(--super-fast-anim) 50ms ease-in;
         }
         .card-text {
             opacity: 0;
             transform: translateX(20px);
-            transition: transform var(--super-fast-anim) 200ms ease-in,
-                        opacity var(--super-fast-anim) 200ms ease-in;
+            transition: transform var(--super-fast-anim) 100ms ease-in,
+            opacity var(--super-fast-anim) 100ms ease-in;
         }
         .card:hover img {
             transform: scale(1.5) rotate(4deg);
