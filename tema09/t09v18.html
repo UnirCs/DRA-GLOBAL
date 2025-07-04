@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- basado en https://github.com/sakibshadman19/book-threejs-vanillajs -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Book</title>
+    <style>
+        body{
+            background-color: #aaa091;
+            max-height: 100vh;
+        }
+        section.book{
+            max-height: 100vh;
+        }
+    </style>
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://unpkg.com/three@0.162.0/build/three.module.js",
+            "orbit": "https://unpkg.com/three@0.162.0/examples/jsm/controls/OrbitControls.js"
+          }
+        }
+    </script>
+</head>
+<body>
+<section class="book"></section>
+</body>
+<script type="module">
+    import * as THREE        from 'three';
+    import { OrbitControls } from 'orbit';
+
+    const section = document.querySelector("section.book")
+
+    // Escena
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+    camera.position.z = 6;
+    const renderer = new THREE.WebGLRenderer({alpha: true, antialias: true});
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    section.appendChild( renderer.domElement );
+
+    // Iluminación
+    const AmbientLight = new THREE.AmbientLight(0xffffff,1 )
+    scene.add(AmbientLight)
+    const light = new THREE.DirectionalLight(0xffffff)
+    light.position.set(0,0,6)
+    const light2 = new THREE.DirectionalLight(0xffffff)
+    light2.position.set(0,0,-6)
+    scene.add(light)
+    scene.add(light2)
+    scene.add(AmbientLight)
+
+    // Helpers de iluminación
+    const helper = new THREE.DirectionalLightHelper( light, 5 );
+    scene.add( helper );
+    const helper2 = new THREE.DirectionalLightHelper( light2, 5 );
+    scene.add( helper2);
+
+
+    // Modelo
+    const loader = new THREE.TextureLoader()
+    const urls = [ "edge.png","spine.png","top.png","bottom.png","front.png","back.png"]
+    const materials = urls.map(url => {
+        return new THREE.MeshLambertMaterial({
+            map: loader.load('images/' + url)
+        })
+    })
+    const geometry = new THREE.BoxGeometry( 3.5, 5, 0.5 );
+    const cube = new THREE.Mesh( geometry, materials );
+    scene.add( cube );
+
+    // Controles de orbita
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping   = true;
+    controls.autoRotate      = true;
+    controls.autoRotateSpeed = 3;
+
+    // Loop de animación
+    let currentTimeline = 0;
+    function animate() {
+        currentTimeline+=0.001;
+        const rx = currentTimeline * -0.5 +0.5
+        const ry = (currentTimeline * 0.9 + 0.1) * Math.PI * 2
+        cube.rotation.set(rx,ry, 0)
+        renderer.render( scene, camera );
+        requestAnimationFrame( animate );
+    }
+    animate();
+
+</script>
+</html>

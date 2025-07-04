@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Square Pattern</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .square {
+            width: 30px;
+            height: 30px;
+            background-color: lightblue;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.5s, height 0.5s;
+        }
+
+        button {
+            position: absolute;
+            z-index: 10;
+            top: 10px;
+            left: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<button id="createPattern">Create Pattern</button>
+<div class="container" id="container"></div>
+
+<script>
+    document.getElementById('createPattern').addEventListener('click', () => {
+        const container = document.getElementById('container');
+        container.innerHTML = ''; // Clear any existing squares
+        const cols = Math.ceil(window.innerWidth / 30);
+        const rows = Math.ceil(window.innerHeight / 30);
+        const totalSquares = cols * rows;
+
+        const squares = [];
+
+        for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+                const square = document.createElement('div');
+                square.className = 'square';
+                square.style.height = '0';
+                square.style.top = `${row * 30}px`;
+                square.style.left = `${col * 30}px`;
+                squares.push(square);
+                container.appendChild(square);
+            }
+        }
+
+        // Shuffle squares array for random order
+        for (let i = squares.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [squares[i], squares[j]] = [squares[j], squares[i]];
+        }
+
+        // Add squares with random delay
+        squares.forEach((square, index) => {
+            setTimeout(() => {
+                square.style.opacity = '1';
+                square.style.height = '30px';
+            }, Math.random() * 1000); // Random delay within 1 second
+        });
+    });
+</script>
+</body>
+</html>

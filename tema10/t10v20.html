@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<style>
+    body{
+        font-family: sans-serif;
+    }
+    .container {
+        position: absolute;
+    }
+    .cuad {
+        text-align: center;
+        line-height: 100px;
+        font-size: 40px;
+        color: whitesmoke;
+
+        position: absolute;
+        width: 100px;
+        height: 100px;
+    }
+
+    .a {
+        left: 30px;
+        top: 30px;
+        z-index: 2;
+        background: darkred;
+        animation: move 1s ease-in-out infinite alternate-reverse;
+    }
+
+    .b {
+        left: 0;
+        top: 0;
+        z-index: 1;
+        background: orange;
+    }
+    @keyframes move {
+        from { transform: translateX(30px); }
+        to {  transform: translateX(100px); }
+    }
+</style>
+<template id="anim">
+    <div class="container">
+        <div class="cuad a">A</div>
+        <div class="cuad b">B</div>
+    </div>
+</template>
+<script>
+    const count = 2000;
+    const tmpl = document.querySelector('#anim');
+
+    function render() {
+        for (let i = 0; i < count; i++) {
+            const x = Math.floor(window.innerWidth * Math.random());
+            const y = Math.floor(window.innerHeight * Math.random());
+            const delay = Math.floor(400 * Math.random()) / 100;
+            const node = tmpl.content.children[0].cloneNode(true);
+            node.style.top = y + 'px';
+            node.style.left = x + 'px';
+            node.querySelector('.a').style.animationDelay = -delay + 's';
+            document.documentElement.appendChild(node)
+        }
+    }
+
+    document.addEventListener('click', render);
+</script>
+</body>
+</html>

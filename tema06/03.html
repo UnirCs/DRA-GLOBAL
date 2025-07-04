@@ -16,47 +16,24 @@
 <body>
 <div class="ball"></div>
 
-<script type="module">
-    import { animate, frame, motionValue } from "https://cdn.jsdelivr.net/npm/motion@12.6.0/+esm"
+<script src="https://unpkg.com/popmotion@11.0.5/dist/popmotion.js"></script>
 
+<script type="module">
+    import { animate } from "https://cdn.jsdelivr.net/npm/motion@12.16.0/+esm"
     const ball = document.querySelector(".ball")
 
-    const { top, left, width, height } = ball.getBoundingClientRect()
-    const initialX = left + width / 2
-    const initialY = top + height / 2
+    let targetX = 0;
+    let targetY = 0;
 
-    const pointerX = motionValue(0)
-    const pointerY = motionValue(0)
+    animate(
+        ball,
+        { transa: 90 },
+        { type: "spring", repeat: Infinity, repeatDelay: 0.2 }
+    )
 
-    function springToPointer() {
-        animate(
-            ball,
-            {
-                x: pointerX.get() - initialX,
-                y: pointerY.get() - initialY,
-            },
-            { type: "spring", stiffness: 100, damping: 10 }
-        )
+    document.addEventListener("mousemove", e => {
+
     }
-
-    function scheduleSpringToPointer() {
-        /**
-         * Al usar `frame.postRender`, logramos dos cosas:
-         * 1. La animación se disparará al final del ciclo de animación, dando
-         *    la oportunidad a cualquier animación de resorte existente de ejecutarse durante un fotograma y renderizarse.
-         * 2. Evitar que se dispare una animación nueva por cada movimiento del puntero,
-         *    ya que esto podría ser más frecuente que el ciclo de animación.
-         */
-        frame.postRender(springToPointer)
-    }
-
-    pointerX.on("change", scheduleSpringToPointer)
-    pointerY.on("change", scheduleSpringToPointer)
-
-    document.addEventListener("pointermove", (e) => {
-        pointerX.set(e.clientX)
-        pointerY.set(e.clientY)
-    })
 </script>
 </body>
 </html>

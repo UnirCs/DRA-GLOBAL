@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Carousel Vertical</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* Estilos generales */
         * {
@@ -43,7 +42,6 @@
             padding: 20px;
             color: white;
         }
-
         /* Colores de fondo de los slides */
         .slide:nth-child(1) {
             background: linear-gradient(to bottom, rgba(255, 87, 51, 0.7), rgba(193, 62, 31, 0.7)), url('https://picsum.photos/1920/1080?random=1') center/cover no-repeat;
@@ -63,6 +61,10 @@
 
         .slide:nth-child(5) {
             background: linear-gradient(to bottom, rgba(155, 89, 182, 0.7), rgba(108, 63, 128, 0.7)), url('https://picsum.photos/1920/1080?random=5') center/cover no-repeat;
+        }
+
+        .slide:nth-child(6) {
+            background: linear-gradient(to bottom, rgba(255, 193, 7, 0.7), rgba(181, 137, 5, 0.7)), url('https://picsum.photos/1920/1080?random=4') center/cover no-repeat;
         }
 
         /* Título y subtítulo */
@@ -109,55 +111,60 @@
     </style>
 </head>
 <body>
-<div class="carousel">
-    <!-- Contenedor de los slides -->
-    <div class="slides">
-        <div class="slide">
-            <div class="title">Slide 1</div>
-            <div class="subtitle">Este es el primer slide</div>
+    <div class="carousel">
+        <!-- Contenedor de los slides -->
+        <div class="slides">
+            <div class="slide">
+                <div class="title">Slide 1</div>
+                <div class="subtitle">Este es el primer slide</div>
+            </div>
+            <div class="slide">
+                <div class="title">Slide 2</div>
+                <div class="subtitle">Este es el segundo slide</div>
+            </div>
+            <div class="slide">
+                <div class="title">Slide 3</div>
+                <div class="subtitle">Este es el tercer slide</div>
+            </div>
+            <div class="slide">
+                <div class="title">Slide 4</div>
+                <div class="subtitle">Este es el cuarto slide</div>
+            </div>
+            <div class="slide">
+                <div class="title">Slide 5</div>
+                <div class="subtitle">Este es el quinto slide</div>
+            </div>
+            <div class="slide">
+                <div class="title">Slide 6</div>
+                <div class="subtitle">Este es el quinto slide</div>
+            </div>
         </div>
-        <div class="slide">
-            <div class="title">Slide 2</div>
-            <div class="subtitle">Este es el segundo slide</div>
-        </div>
-        <div class="slide">
-            <div class="title">Slide 3</div>
-            <div class="subtitle">Este es el tercer slide</div>
-        </div>
-        <div class="slide">
-            <div class="title">Slide 4</div>
-            <div class="subtitle">Este es el cuarto slide</div>
-        </div>
-        <div class="slide">
-            <div class="title">Slide 5</div>
-            <div class="subtitle">Este es el quinto slide</div>
-        </div>
+
+        <!-- Botones -->
+        <button class="button up">↑</button>
+        <button class="button down">↓</button>
     </div>
+    <script>
 
-    <!-- Botones -->
-    <button class="button up">↑</button>
-    <button class="button down">↓</button>
-</div>
+        const slides = document.querySelector('.slides');
+        const totalSlides = document.querySelectorAll('.slide').length;
+        let currentSlide = 0;
 
-<script>
-    const slides = document.querySelector('.slides');
-    const totalSlides = document.querySelectorAll('.slide').length;
-    let currentSlide = 0;
-
-    // Función para cambiar de slide
-    function changeSlide(direction) {
-        if (direction === 'up') {
-            currentSlide = (currentSlide > 0) ? currentSlide - 1 : totalSlides - 1;
-        } else if (direction === 'down') {
-            currentSlide = (currentSlide < totalSlides - 1) ? currentSlide + 1 : 0;
+        // Función para cambiar de slide
+        function changeSlide(direction) {
+            if (direction === 'up') {
+                currentSlide = (currentSlide > 0) ? currentSlide - 1 : totalSlides - 1;
+            } else if (direction === 'down') {
+                currentSlide = (currentSlide < totalSlides - 1) ? currentSlide + 1 : 0;
+            }
+            const offset = currentSlide * -100;
+            slides.style.transform = `translateY(${offset}vh)`;
         }
-        const offset = currentSlide * -100;
-        slides.style.transform = `translateY(${offset}vh)`;
-    }
 
-    // Listeners para los botones
-    document.querySelector('.button.up').addEventListener('click', () => changeSlide('up'));
-    document.querySelector('.button.down').addEventListener('click', () => changeSlide('down'));
-</script>
+        // Listeners para los botones
+        document.querySelector('.button.up').addEventListener('click', () => changeSlide('up'));
+        document.querySelector('.button.down').addEventListener('click', () => changeSlide('down'));
+
+    </script>
 </body>
 </html>
