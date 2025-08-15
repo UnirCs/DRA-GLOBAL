@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLS Demo</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #E5F6FB;
+            color: #333333;
+        }
+
+        .hero {
+            background-color: #0098CE;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position:  relative;
+            z-index: 1;
+        }
+
+        .cards-container {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-image {
+            background: #ddd;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, #fff6, transparent);
+            animation: loading 1.5s infinite;
+        }
+
+        .card-image img {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card-image.loaded img{
+            opacity: 1;
+        }
+
+        .card-image.loaded::after {
+            display: none;
+        }
+
+        .card-content {
+            padding: 1rem;
+        }
+
+        @keyframes loading {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        img {
+            width: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-banner {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            transition: margin-top 1s ease-in-out;
+            margin-top: -400px;
+        }
+
+        .hero-banner img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .hero-banner.fade-in {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="hero">
+    <h1>CLS Demo Page</h1>
+    <p>Example showing Cumulative Layout Shift</p>
+</div>
+<div class="hero-banner">
+    <img src="https://picsum.photos/1200/400" alt="Hero banner">
+</div>
+
+<div class="cards-container">
+    <div class="card">
+        <div class="card-image">
+            <img src="https://picsum.photos/300/200?random=1" alt="Random image 1"
+                 onload="this.parentNode.classList.add('loaded')">
+        </div>
+        <div class="card-content">
+            <p>Card content 1 with some example text to show the layout.</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-image">
+            <img src="https://picsum.photos/300/200?random=2" alt="Random image 2"
+                 onload="this.parentNode.classList.add('loaded')">
+        </div>
+        <div class="card-content">
+            <p>Card content 2 with some example text to show the layout.</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-image">
+            <img src="https://picsum.photos/300/200?random=3" alt="Random image 3"
+                 onload="this.parentNode.classList.add('loaded')">
+        </div>
+        <div class="card-content">
+            <p>Card content 3 with some example text to show the layout.</p>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const images = document.querySelectorAll('img');
+        let loadedImages = 0;
+
+        const checkAllImagesLoaded = () => {
+            loadedImages++;
+            if (loadedImages === images.length) {
+                const heroBanner = document.querySelector('.hero-banner img');
+                heroBanner.parentNode.classList.add('fade-in');
+            }
+        };
+
+        images.forEach(img => {
+            if (img.complete) {
+                checkAllImagesLoaded();
+            } else {
+                img.addEventListener('load', checkAllImagesLoaded);
+            }
+        });
+    });
+</script>
+</body>
+</html>
