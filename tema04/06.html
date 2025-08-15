@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Transiciones de Vista en Cuadrícula</title>
+    <style>
+        body {
+            background-color: white;
+            color: #d3d3d3;
+            font-family: system-ui, sans-serif;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .contenedor {
+            padding: 2rem;
+        }
+
+        .botones {
+            margin-bottom: 1rem;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            background-color: #0098CE;
+            border: none;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button:focus {
+            box-shadow: 0 0 0 3px #0098CE;
+            outline: none;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(10vw, 1fr));
+            grid-auto-rows: 10vw;
+            gap: 2vw;
+            grid-auto-flow: dense;
+        }
+
+        .grid--columnas-grandes {
+            grid-template-columns: repeat(auto-fit, minmax(20vw, 1fr));
+        }
+
+        .tarjeta {
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tarjeta > * {
+            pointer-events: none;
+        }
+
+        .tarjeta__img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .tarjeta--expandida {
+            grid-column: span 3;
+            grid-row: span 3;
+        }
+
+        code {
+            color: #cccccc;
+            background: rgba(0,0,0,0.2);
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+<div class="contenedor">
+    <div class="botones">
+        <button class="js-toggle-grid-columns">Alternar <code>grid-template-columns</code></button>
+        <p>Haz clic en una tarjeta para expandirla o contraerla.</p>
+    </div>
+
+    <div class="grid" id="cuadricula">
+        <!-- Tarjetas se insertan aquí dinámicamente -->
+    </div>
+
+    <p >
+        <button class="js-add-card">Añadir tarjeta</button>
+    </p>
+</div>
+
+<script type="module">
+    const cuadricula = document.getElementById("cuadricula");
+
+    // Alternar columnas de la cuadrícula
+    document.querySelector(".js-toggle-grid-columns")
+        .addEventListener("click", () => {
+            if (document.startViewTransition) {
+                document.startViewTransition(() => {
+                    cuadricula.classList.toggle("grid--columnas-grandes");
+                });
+            } else {
+                cuadricula.classList.toggle("grid--columnas-grandes");
+            }
+        });
+
+    // Función para añadir una nueva tarjeta
+    const añadirTarjeta = () => {
+        const idUnico = window.performance.now().toString().replace('.', '_') + Math.floor(Math.random() * 1000);
+        return fetch(`https://picsum.photos/seed/${idUnico}/1200/1200`)
+            .then(respuesta => {
+                cuadricula.insertAdjacentHTML(
+                    "beforeend",
+                    `<div class="tarjeta" style="view-transition-name: tarjeta_${idUnico}">
+              <img src="${respuesta.url}" class="tarjeta__img" />
+            </div>`
+                );
+            });
+    };
+
+    // Añadir tarjeta al hacer clic
+    document.querySelector(".js-add-card").addEventListener("click", e => {
+        e.preventDefault();
+        if (document.startViewTransition) {
+            document.startViewTransition(añadirTarjeta);
+        } else {
+            añadirTarjeta();
+        }
+    });
+
+    // Alternar expansión de tarjeta al hacer clic
+    cuadricula.addEventListener("click", ev => {
+        let tarjeta = ev.target.closest(".tarjeta");
+        if (tarjeta) {
+            if (document.startViewTransition) {
+                document.startViewTransition(() => {
+                    tarjeta.classList.toggle("tarjeta--expandida");
+                });
+            } else {
+                tarjeta.classList.toggle("tarjeta--expandida");
+            }
+        }
+    });
+
+    // Añadir tarjetas iniciales
+    Promise.all([...Array(10).keys()].map(añadirTarjeta));
+</script>
+</body>
+</html>

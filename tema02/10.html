@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Accesibilidad y Animación</title>
+    <style>
+        body {
+            background: #E5F6FB;
+            font-family: sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            width: 300px;
+            height: 180px;
+            background-color: #0098CE;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fade-slide-in 0.6s ease-out forwards;
+            text-align: center;
+            padding: 0 2em;
+        }
+
+        @keyframes fade-slide-in {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Preferencia por movimiento reducido */
+        @media (prefers-reduced-motion: reduce) {
+            .card {
+                animation: none !important;
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* También aplicable desde JS si se desea */
+        .reduced-motion .card {
+            animation: none !important;
+            opacity: 1;
+            transform: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">Para probar este ejemplo tienes que cambiar la preferencia de movimiento reducido en tu sistema operativo. Una vez activado no deberías ver la animación al recargarlo</div>
+
+<script>
+    // Opción adicional para controlar desde JavaScript
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+        document.documentElement.classList.add('reduced-motion');
+    }
+</script>
+
+</body>
+</html>

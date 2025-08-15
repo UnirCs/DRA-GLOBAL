@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <title>Tooltip GSAP</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-direction: column;
+            min-height: 100vh;
+            background: #F0F4F8;
+        }
+        button {
+            display: inline-block;
+            outline: none;
+            padding: 12px 20px;
+            background: #4CAF50;
+            border: none;
+            border-radius: 30px;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        button:hover {
+            background: #66BB6A;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .container {
+            position: relative;
+        }
+        .tooltip {
+            position: absolute;
+            left: calc(100% + 1rem);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            font-size: 0.75rem;
+            padding: 1rem;
+            background-color: #2196F3;
+            color: #FFFFFF;
+            border-radius: 10px;
+            z-index: -1;
+            opacity: 0;
+        }
+        .tooltip::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 100%;
+            border-width: 8px;
+            border-style: solid;
+            border-color: transparent #2196F3 transparent transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button>hover me</button>
+        <div class="tooltip">Este elemento tendrá diferentes animaciones de entrada y salida</div>
+    </div>
+</body>
+<script>
+    let btn = document.querySelector("button");
+
+
+    gsap.set(".tooltip", { opacity: 1 });
+
+    const tl = gsap.timeline({ paused: true });
+    let exitTime = 0;
+
+    tl.from(".tooltip", {
+        opacity: 0,
+        scale: 0.2,
+        xPercent: -70,
+        duration: 1,
+        ease: "expo.inOut"
+    });
+    tl.addPause();
+    exitTime = tl.duration();
+    tl.to(".tooltip", {
+        yPercent: 400,
+        rotation: "random([-90, 90, -45, 45, -180, 180])",
+        opacity: 0,
+        duration: 0.6
+    });
+
+    btn.addEventListener("mouseenter", () => {
+        if (tl.time() < exitTime) {
+            tl.play();
+        } else {
+            tl.restart();
+        }
+    });
+    btn.addEventListener("mouseleave", () => {
+        if (tl.time() < exitTime) {
+            tl.reverse();
+        } else {
+            tl.invalidate().play();
+        }
+    });
+
+</script>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Accordion con reflow</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            background: #E5F6FB;
+            color: #333
+        }
+
+        button {
+            background: #0098CE;
+            color: #fff;
+            border: 0;
+            padding: 8px 12px;
+            cursor: pointer
+        }
+
+        .panel {
+            border: 1px solid #CCCCCC;
+            margin: 8px 0;
+            background: #FFA25B
+        }
+
+        .panel > div {
+            overflow: hidden
+        }
+
+        /* el alto se anima */
+    </style>
+</head>
+<body>
+
+<button id="toggle">Mostrar / Ocultar detalles</button>
+
+<section class="panel">
+    <div id="content">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean egestas
+            lectus vel nibh fermentum, sed placerat erat pulvinar.</p>
+    </div>
+</section>
+
+<script>
+    const btn = document.getElementById('toggle');
+    const content = document.getElementById('content');
+    let open = false;
+
+    // Animación manual → lee y escribe height *cada* frame
+    btn.onclick = () => {
+        open = !open;
+        const target = open ? content.scrollHeight : 0;
+        const step = () => {
+            /* 1- LECTURA: fuerza layout */
+            const h = content.offsetHeight;           // reflow sincronizado
+            /* 2- ESCRITURA: invalida layout */
+            const dir = (target > h) ? 1 : -1;
+            const next = h + dir * 10;                // incrementos de 10 px
+            content.style.height = next + 'px';
+            if ((dir === 1 && next < target) ||
+                (dir === -1 && next > target)) {
+                requestAnimationFrame(step);            // bucle ≈60 FPS
+            } else {
+                content.style.height = target + 'px';   // fijar valor final
+            }
+        };
+        requestAnimationFrame(step);
+    };
+</script>
+</body>
+</html>

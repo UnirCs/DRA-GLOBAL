@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4/animate.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #E5F6FB;
+            font-family: sans-serif;
+            color: #0098CE;
+            font-size: 3rem;
+        }
+        .cta {
+            display: inline-block;
+            padding: 1rem 2rem;
+            font-size: 1.25rem;
+            background: #0ea5e9;
+            color: #fff;
+            border-radius: 0.75rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<button id="btn" class="cta animate__animated">Comprar ahora</button>
+
+<script>
+    const btn = document.getElementById('btn');
+    btn.addEventListener('mouseenter', () => {
+        btn.classList.remove('animate__jello');
+        void btn.offsetWidth; // reflow para reiniciar
+        btn.classList.add('animate__jello', 'animate__faster');
+    });
+</script>
+</body>
+</html>

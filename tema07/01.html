@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Barra de progreso de lectura – ScrollTimeline</title>
+
+        <style>
+            /* -------------- Estilos base -------------- */
+            body {
+                margin: 0;
+                padding: 0 1.2rem;
+                font-family: system-ui, sans-serif;
+                line-height: 1.6;
+                background: #E5F6FB;
+                color: #333333;
+            }
+
+            /* -------------- Barra de progreso -------------- */
+            #reading {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 20px;
+                background: #0098CE;
+                transform-origin: left;
+                animation: fill linear;
+                animation-timeline: scroll(root block); /* vincula al scroll vertical del documento */
+            }
+
+            @keyframes fill {
+                from {
+                    transform: scaleX(0);
+                }
+                to {
+                    transform: scaleX(1);
+                }
+            }
+
+            /* -------------- Contenido demo -------------- */
+            .article {
+                max-width: 65ch;
+                margin: 6rem auto;
+            }
+
+            .article h1 {
+                color: #006C94;
+            }
+
+            .article h2 {
+                color: #0098CE;
+            }
+
+            .article a {
+                color: #FFA25B;
+            }
+
+            .article img {
+                width: 100%;
+                border: 3px solid #CCCCCC;
+                border-radius: 4px;
+                margin: 1rem 0;
+            }
+
+            /* -------------- Accesibilidad -------------- */
+            @media (prefers-reduced-motion: reduce) {
+                #reading {
+                    animation: none;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="reading"></div>
+
+        <!-- Contenido (solo para generar scroll) -->
+        <article class="article">
+            <h1>Animaciones guiadas por scroll en CSS</h1>
+            <p>Las animaciones <strong>scroll-driven</strong> vinculan el progreso de una animación
+                a la posición de desplazamiento en lugar de al paso del tiempo. Esto permite
+                crear experiencias como barras de lectura, efectos parallax y narrativas
+                interactivas.</p>
+
+            <h2>¿Cómo funciona <code>scroll()</code>?</h2>
+            <p>Con <code>animation-timeline: scroll()</code> el navegador genera una línea de
+                tiempo cuyo progreso va de 0 a 1 según avanzas por el documento. Puedes
+                indicar el contenedor (<em>root</em>, <em>nearest</em>, <em>self</em>) y el eje
+                (<em>block</em>, <em>inline</em>, <em>x</em>, <em>y</em>).</p>
+
+            <img src="https://dummyimage.com/800x400/5BC8EF/ffffff&text=Demo+Image" alt="Imagen de demostración">
+
+            <p>En navegadores sin soporte la barra simplemente no se animará, de modo que
+                es buena práctica envolver estas reglas en
+                <code>@supports(animation-timeline: scroll())</code> para garantizar
+                <em>progressive enhancement</em>.</p>
+
+            <h2>Implementación con WAAPI</h2>
+            <p>También es posible lograr el efecto desde JavaScript usando
+                <code>new ScrollTimeline()</code> y pasando el objeto a
+                <code>Element.animate()</code>. Con WAAPI dispones de controles como
+                <code>pause()</code>, <code>reverse()</code> o sincronización con otras
+                interacciones.</p>
+
+            <p>¡Sigue desplazándote para ver la barra llenarse!</p>
+
+            <!-- Texto de relleno para asegurar scroll -->
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis interdum
+                dictum sapien, sit amet elementum arcu bibendum vel. Integer vitae
+                condimentum ipsum. Suspendisse potenti. In sed lacus nulla. Integer sit
+                amet turpis a mi viverra pulvinar. Quisque dictum, dolor sit amet
+                consequat imperdiet, lorem libero fermentum massa, at interdum massa
+                justo a dui. Vestibulum ante ipsum primis in faucibus orci luctus et
+                ultrices posuere cubilia curae; Pellentesque a libero vitae tortor
+                tincidunt eleifend.</p>
+
+            <p>Curabitur dignissim vehicula massa a bibendum. Aliquam venenatis nibh
+                vitae augue varius dignissim. In non enim sit amet leo tincidunt
+                vulputate. Proin porta, libero ut dictum scelerisque, dolor arcu
+                condimentum ligula, non luctus nisi mi in nibh. Nam pharetra magna ac
+                tortor faucibus rhoncus. Sed pulvinar ante a nibh molestie tempor.</p>
+
+            <p style="margin-bottom:60vh">
+                Fin de la demo. Desplázate de nuevo hacia arriba para ver cómo la barra se vacía.
+            </p>
+        </article>
+    </body>
+</html>

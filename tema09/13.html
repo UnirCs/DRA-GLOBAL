@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Matter-js | Caída y rebote</title>
+    <style>
+        :root {
+            --color-primary: #0055ff;
+            --color-accent: #ff7b00;
+            --color-bg: #f5f7fa;
+        }
+
+        body {
+            margin: 0;
+            background: var(--color-bg);
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<canvas id="lienzo"></canvas>
+
+<script src="https://unpkg.com/matter-js@0.20.0/build/matter.min.js"></script>
+<script>
+    const {Engine, Render, Runner, Bodies, World, Mouse, MouseConstraint, Composite} = Matter;
+
+    /* Motor y render */
+    const engine = Engine.create();
+    const canvas = document.getElementById('lienzo');
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+    const render = Render.create({
+        canvas, engine,
+        options: {wireframes: false, background: '#f5f7fa', width: innerWidth, height: innerHeight}
+    });
+    Render.run(render);
+    Runner.run(Runner.create(), engine);
+
+    /* Paredes de la escena */
+    const paredes = [
+        Bodies.rectangle(innerWidth / 2, innerHeight + 25, innerWidth, 50, {isStatic: true}),
+        Bodies.rectangle(-25, innerHeight / 2, 50, innerHeight, {isStatic: true}),
+        Bodies.rectangle(innerWidth + 25, innerHeight / 2, 50, innerHeight, {isStatic: true})
+    ];
+    World.add(engine.world, paredes);
+
+    /* Gravedad estándar */
+    engine.gravity.y = 1;
+
+    /* Generamos 25 formas al azar */
+    for (let i = 0; i < 25; i++) {
+        const x = 60 + Math.random() * (innerWidth - 120);
+        const y = -Math.random() * 200;
+        const cuerpo = (i % 2)
+            ? Bodies.rectangle(x, y, 40, 40, {restitution: 0.6, render: {fillStyle: '#0055ff'}})
+            : Bodies.circle(x, y, 20, {restitution: 0.9, render: {fillStyle: '#ff7b00'}});
+        World.add(engine.world, cuerpo);
+    }
+
+
+    /* MouseConstraint permite “lanzar” las piezas */
+    const raton = Mouse.create(canvas);
+    const mouseConstraint = MouseConstraint.create(engine, {mouse: raton, constraint: {stiffness: 0.2}});
+    World.add(engine.world, mouseConstraint);
+
+    /* Responsivo */
+    addEventListener('resize', () => {
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+        Render.lookAt(render, {min: {x: 0, y: 0}, max: {x: innerWidth, y: innerHeight}});
+    });
+</script>
+</body>
+</html>

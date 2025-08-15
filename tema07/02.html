@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barra de lectura – WAAPI + ScrollTimeline</title>
+
+    <style>
+        /* ---- Estilos base ---- */
+        body {
+            margin: 0;
+            padding: 0 1.2rem;
+            font-family: system-ui, sans-serif;
+            line-height: 1.6;
+            background: #E5F6FB;
+            color: #333333;
+        }
+
+        /* ---- Barra de progreso ---- */
+        #reading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: #0098CE;
+            transform-origin: left;
+            transform: scaleX(0);
+        }
+
+        /* ---- Contenido demo para generar scroll ---- */
+        .article {
+            max-width: 65ch;
+            margin: 6rem auto;
+        }
+
+        .article h1 {
+            color: #006C94;
+        }
+
+        .article h2 {
+            color: #0098CE;
+        }
+
+        .article a {
+            color: #FFA25B;
+        }
+
+        .article img {
+            width: 100%;
+            border: 3px solid #CCCCCC;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        /* ---- Accesibilidad ---- */
+        @media (prefers-reduced-motion: reduce) {
+            #reading {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<!-- Barra de lectura -->
+<div id="reading"></div>
+
+<!-- Contenido (solo para provocar scroll) -->
+<article class="article">
+    <h1>Animaciones guiadas por scroll con WAAPI</h1>
+    <p>Este ejemplo replica la barra de progreso de lectura, pero ahora la
+        animación se define con la Web Animations API y una <em>ScrollTimeline</em>.</p>
+
+    <h2>¿Por qué usar WAAPI?</h2>
+    <p>Con WAAPI puedes pausar, invertir o sincronizar la animación con otras
+        interacciones JavaScript, manteniendo la precisión que ofrece la línea de
+        tiempo del scroll.</p>
+
+    <img src="https://dummyimage.com/800x400/5BC8EF/ffffff&text=Demo+Image" alt="Imagen de demostración">
+
+    <p>Sigue desplazándote y observa cómo la barra refleja exactamente tu
+        progreso de lectura.</p>
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis interdum
+        dictum sapien, sit amet elementum arcu bibendum vel. Integer vitae
+        condimentum ipsum. Suspendisse potenti. In sed lacus nulla. Integer sit
+        amet turpis a mi viverra pulvinar. Quisque dictum, dolor sit amet
+        consequat imperdiet, lorem libero fermentum massa, at interdum massa
+        justo a dui. Vestibulum ante ipsum primis in faucibus orci luctus et
+        ultrices posuere cubilia curae; Pellentesque a libero vitae tortor
+        tincidunt eleifend.</p>
+
+    <p>Curabitur dignissim vehicula massa a bibendum. Aliquam venenatis nibh
+        vitae augue varius dignissim. In non enim sit amet leo tincidunt
+        vulputate. Proin porta, libero ut dictum scelerisque, dolor arcu
+        condimentum ligula, non luctus nisi mi in nibh. Nam pharetra magna ac
+        tortor faucibus rhoncus. Sed pulvinar ante a nibh molestie tempor.</p>
+
+    <p style="margin-bottom:60vh">
+        Fin de la demo. Desplázate hacia arriba para ver la barra vaciarse.
+    </p>
+</article>
+
+<script>
+    /* ------------ WAAPI + ScrollTimeline ------------ */
+    const bar = document.getElementById('reading');
+
+    /* 1. Creamos la línea de tiempo basada en scroll del documento */
+    const timeline = new ScrollTimeline({
+        source: document.documentElement,  // scrolling ancestor
+        axis: 'block'                      // scroll vertical
+    });
+
+    /* 2. Animamos la barra: de scaleX(0) a scaleX(1) y viceversa */
+    bar.animate(
+        {transform: ['scaleX(0)', 'scaleX(1)']},
+        {
+            fill: 'both',           // mantiene el último estado cuando se llena/vacía
+            timeline                // la “duración” la dicta el scroll
+        }
+    );
+
+    /* (Opcional) controlar la animación desde JS
+       const anim = bar.getAnimations()[0];
+       anim.pause(); anim.currentTime = 0.5; etc.
+    */
+</script>
+</body>
+</html>

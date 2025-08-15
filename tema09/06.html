@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ripple con Houdini y WAAPI</title>
+    <style>
+        :root{
+            --color-primary:#0055ff;
+            --color-accent:#ff7b00;
+            --color-bg:#f5f7fa;
+        }
+
+        /* Propiedades tipadas que usa el worklet */
+        @property --animation-tick { syntax: '<number>'; initial-value: 1001; inherits: false; }
+        @property --ripple-x       { syntax: '<number>'; initial-value: 0;    inherits: false; }
+        @property --ripple-y       { syntax: '<number>'; initial-value: 0;    inherits: false; }
+        @property --ripple-color   { syntax: '<color>';  initial-value: rgba(255,255,255,.3); inherits: false; }
+
+        body{
+            display:grid;
+            place-content:center;
+            height:100vh;
+            margin:0;
+            font-family:system-ui;
+            background:var(--color-bg);
+        }
+
+        button{
+            position:relative;
+            padding:1rem 2.5rem;
+            font-size:1.1rem;
+            color:#fff;
+            background:var(--color-primary);
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            overflow:hidden;                /* recorta la onda */
+            background-image:paint(ripple); /* activa el worklet */
+            --animation-tick:1001;          /* fuera de rango por defecto */
+        }
+
+        button:hover{ background:var(--color-accent); }
+    </style>
+</head>
+<body>
+
+<button id="btn">Click me</button>
+
+<script>
+    /* Carga del Paint Worklet */
+    CSS.paintWorklet.addModule('ripple.js');
+
+    const btn = document.getElementById('btn');
+
+    btn.addEventListener('click', e => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        /* Coordenadas de inicio y valor inicial del contador */
+        btn.style.setProperty('--ripple-x', x);
+        btn.style.setProperty('--ripple-y', y);
+        btn.style.setProperty('--animation-tick', 0);
+
+        /* Si ya hay una animación en curso la detenemos */
+        btn._rippleAnim?.cancel();
+
+        /* Animación declarada con WAAPI */
+        btn._rippleAnim = btn.animate(
+            [
+                { '--animation-tick': '0'   },
+                { '--animation-tick': '1000' }
+            ],
+            {
+                duration: 600,
+                easing:   'ease-out',
+                fill:     'forwards'
+            }
+        );
+        console.log(btn._rippleAnim);
+    });
+</script>
+</body>
+</html>

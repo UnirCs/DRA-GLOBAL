@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Imágenes reveladoras con WAAPI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        img {
+            width: 100%;
+            border: 5px solid #444;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 0; /* estado inicial */
+            clip-path: inset(45% 20% 45% 20%);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sección inicial -->
+<section style="background-color: #dff7df;">
+    <div class="container">
+        <h1>Bienvenido</h1>
+        <p>Desplázate hacia abajo para ver el efecto de revelado en las imágenes.</p>
+    </div>
+</section>
+
+<!-- Imágenes reveladoras -->
+<section style="background-color: #fde2e4;">
+    <img src="https://picsum.photos/800/400?random=1" alt="Imagen 1" class="revealing-image">
+</section>
+<section style="background-color: #cce7ff;">
+    <img src="https://picsum.photos/800/400?random=2" alt="Imagen 2" class="revealing-image">
+</section>
+<section style="background-color: #ffe0b5;">
+    <img src="https://picsum.photos/800/400?random=3" alt="Imagen 3" class="revealing-image">
+</section>
+
+<!-- Sección final -->
+<section style="background-color: #f0f0f0;">
+    <div class="container">
+        <h1>¡Gracias!</h1>
+        <p>Este fue un ejemplo del efecto de revelado de imágenes usando WAAPI.</p>
+    </div>
+</section>
+
+<script>
+    document.querySelectorAll('.revealing-image').forEach((img) => {
+        const timeline = new ViewTimeline({
+            subject: img,
+            axis: 'block',
+            scrollOffsets: [
+                { edge: 'entry', threshold: CSS.percent(25) },
+                { edge: 'cover', threshold: CSS.percent(50) }
+            ]
+        });
+
+        img.animate(
+            [
+                { opacity: 0, clipPath: 'inset(45% 20% 45% 20%)' },
+                { opacity: 1, clipPath: 'inset(0% 0% 0% 0%)' }
+            ],
+            {
+                duration: 1,
+                fill: 'both',
+                timeline: timeline,
+                easing: 'linear'
+            }
+        );
+    });
+</script>
+
+</body>
+</html>

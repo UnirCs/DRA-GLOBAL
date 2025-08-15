@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html class="no-js" lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Spritesheet</title>
+	<style>
+		.playground{
+			display: flex;
+			height: 100vh;
+			justify-content: space-around;
+			align-items: center;
+		}
+		:root {
+			--base-time: 1s;
+			--time-scale: 1;
+			--animated-time: calc(var(--base-time) * var(--time-scale));
+		}
+		.sprite {
+			--speed: 1.2;
+			--sprite-tiome: calc(var(--animated-time) * var(--speed));
+			width: 100px;
+			height: 100px;
+			background: url(spritesheet.png) no-repeat 0 0;
+			animation: play-sprite var(--sprite-tiome) steps(44) infinite;
+			animation-play-state: paused;
+		}
+		.sprite:hover {
+			animation-play-state: running;
+		}
+		@keyframes play-sprite {
+			from {
+				background-position: 0 0;
+			}
+			to {
+				/* La posición final es el ancho de la imagen por el número de fotogramas */
+				background-position: calc(-100px*44) 0;
+			}
+		}
+	</style>
+</head>
+<body>
+
+<div class="playground">
+	<div class="sprite"></div>
+</div>
+</body>
+</html>

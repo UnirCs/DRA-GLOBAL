@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<meta charset="utf-8">
+<title>GSAP – Básico</title>
+<style>
+    :root {
+        --color-primary: #0055ff;
+        --color-bg: #f5f7fa;
+    }
+
+    body {
+        margin: 0;
+        background: var(--color-bg);
+        display: grid;
+        place-items: center;
+        height: 100vh;
+        font-family: system-ui;
+    }
+
+    .panel {
+        opacity: 0;
+        transform: translateY(60px);
+        background: var(--color-primary);
+        color: #fff;
+        padding: 2rem 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 14px #0003;
+    }
+</style>
+<body>
+<article class="panel">¡Hola GSAP!</article>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<script>
+    gsap.to('.panel', {y: 0, opacity: 1, duration: 1.2, ease: 'power3.out'});
+</script>
+</body>
+</html>

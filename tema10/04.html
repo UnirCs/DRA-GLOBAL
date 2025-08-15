@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Accordion optimizado</title>
+    <style>
+
+        body {
+            font-family: system-ui, sans-serif;
+            background: #E5F6FB;
+            color: #333
+        }
+
+        button {
+            background: #0098CE;
+            color: #fff;
+            border: 0;
+            padding: 8px 12px;
+            cursor: pointer
+        }
+
+        .panel {
+            border: 1px solid #CCCCCC;
+            margin: 8px 0;
+            background: #FFA25B;
+            /* Aislar la capa que escalará */
+            position: relative;
+            overflow: hidden;
+            will-change: transform
+        }
+
+        .panel-inner {
+            transform-origin: top;
+            transition: transform .35s cubic-bezier(.4, 0, .2, 1);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+
+        .panel--closed .panel-inner {
+            transform: scaleY(0);
+        }
+
+        /* Estado colapsado */
+    </style>
+</head>
+<body>
+
+<button id="toggle">Mostrar / Ocultar detalles</button>
+
+<section class="panel panel--closed" id="panel">
+    <div class="panel-inner">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean egestas
+            lectus vel nibh fermentum, sed placerat erat pulvinar.</p>
+    </div>
+</section>
+
+<script>
+    const btn = document.getElementById('toggle');
+    const panel = document.getElementById('panel');
+    btn.onclick = () => {
+        panel.classList.toggle('panel--closed');  // un solo cambio de clase
+    };
+</script>
+</body>
+</html>

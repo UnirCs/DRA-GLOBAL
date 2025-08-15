@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animaciones con @keyframes</title>
+    <style>
+        body {
+            background-color: #E5F6FB;
+            font-family: sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #0098CE;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .card {
+            width: 250px;
+            height: 150px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* ANIMACIONES */
+        @keyframes pulse {
+            0%   { transform: scale(1); }
+            50%  { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shake {
+            0%   { transform: translateX(0); }
+            20%  { transform: translateX(-10px); }
+            40%  { transform: translateX(10px); }
+            60%  { transform: translateX(-10px); }
+            80%  { transform: translateX(10px); }
+            100% { transform: translateX(0); }
+        }
+
+        @keyframes pop {
+            0%   { transform: scale(1) rotate(0deg); }
+            30%  { transform: scale(1.3) rotate(5deg); }
+            50%  { transform: scale(0.95) rotate(-4deg); }
+            70%  { transform: scale(1.15) rotate(3deg); }
+            90%  { transform: scale(0.98) rotate(-2deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+
+        .animate-pulse {
+            animation: pulse 600ms infinite;
+            animation-play-state: running;
+        }
+
+        .animate-shake {
+            animation: shake 0.6s ease;
+            animation-fill-mode: forwards;
+        }
+
+        .animate-pop {
+            animation: pop 0.6s ease;
+            animation-fill-mode: forwards;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card" id="card">Soy una Card</div>
+
+<div class="buttons">
+    <button onclick="startPulse()">Pulso</button>
+    <button onclick="startShake()">Negación</button>
+    <button onclick="startPop()">Atención</button>
+</div>
+
+<script>
+    const card = document.getElementById('card');
+    function clearAnimations() {
+        card.classList.remove('animate-pulse', 'animate-shake', 'animate-pop');
+    }
+
+    function startPulse() {
+        clearAnimations();
+        card.classList.add('animate-pulse');
+    }
+
+    function startShake() {
+        clearAnimations();
+        card.classList.add('animate-shake');
+    }
+
+    function startPop() {
+        clearAnimations();
+        card.classList.add('animate-pop');
+    }
+</script>
+
+</body>
+</html>

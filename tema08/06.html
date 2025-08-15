@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejemplo Lottie – Básico</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            background: #E5F6FB; /* Claro 2 – fondo */
+        }
+
+        canvas {
+            border: 2px solid #CCCCCC; /* Neutral claro */
+            border-radius: 0.5rem;
+        }
+
+        button {
+            padding: 12px 24px;
+            background-color: #0098CE;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 20px 3px 3px;
+        }
+    </style>
+</head>
+<body>
+<canvas id="lottieCanvas" width="400" height="400"></canvas>
+<div>
+    <button id="btn1">Anim1</button>
+    <button id="btn2">Anim2</button>
+</div>
+<script type="module">
+    import {DotLottie} from 'https://cdn.skypack.dev/@lottiefiles/dotlottie-web';
+
+    const canvas = document.getElementById('lottieCanvas');
+    const player = new DotLottie({
+        canvas,
+        src: 'lib/lottie/animation1.lottie',
+        loop: true,
+        autoplay: true
+    });
+    // Ejemplo: pausar con tecla P y reanudar con R
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'p') player.pause();
+        if (e.key === 'r') player.play();
+    });
+
+    document.getElementById('btn1').addEventListener('click', () => {
+        player.load({
+            src: 'lib/lottie/animation1.lottie',
+            loop: true,
+            autoplay: true
+        });
+    });
+    document.getElementById('btn2').addEventListener('click', () => {
+        player.load({
+            src: 'lib/lottie/animation2.lottie',
+            loop: true,
+            autoplay: true
+        });
+    });
+
+</script>
+
+</body>
+</html>

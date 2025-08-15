@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spring playground</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .controls {
+            margin-bottom: 30px;
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .control-group input[type="range"] {
+            width: 300px;
+        }
+
+        .ball {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background-color: coral;
+            border-radius: 50%;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Spring Animation Playground</h1>
+    <div class="controls">
+        <div class="control-group">
+            <label for="stiffness">Stiffness: <span id="stiffness-value">150</span></label>
+            <input type="range" id="stiffness" min="50" max="300" value="100" step="10">
+        </div>
+        <div class="control-group">
+            <label for="damping">Damping: <span id="damping-value">10</span></label>
+            <input type="range" id="damping" min="1" max="20" value="10" step="1">
+        </div>
+        <div class="control-group">
+            <label for="mass">Mass: <span id="mass-value">1</span></label>
+            <input type="range" id="mass" min="0.5" max="5" value="1" step="0.1">
+        </div>
+        <button id="play">Play</button>
+    </div>
+
+    <div class="ball" id="ball"></div>
+
+    <script src="https://unpkg.com/popmotion@11.0.5/dist/popmotion.js"></script>
+    <script>
+        const { animate } = window.popmotion;
+
+        const ball = document.getElementById("ball");
+        const playBtn = document.getElementById("play");
+
+        const stiffnessInput = document.getElementById("stiffness");
+        const dampingInput = document.getElementById("damping");
+        const massInput = document.getElementById("mass");
+
+        const stiffnessValue = document.getElementById("stiffness-value");
+        const dampingValue = document.getElementById("damping-value");
+        const massValue = document.getElementById("mass-value");
+
+        let controls = {
+            stiffness: parseFloat(stiffnessInput.value),
+            damping: parseFloat(dampingInput.value),
+            mass: parseFloat(massInput.value),
+        };
+
+        const updateControls = () => {
+            controls = {
+                stiffness: parseFloat(stiffnessInput.value),
+                damping: parseFloat(dampingInput.value),
+                mass: parseFloat(massInput.value),
+            };
+
+            stiffnessValue.textContent = controls.stiffness;
+            dampingValue.textContent = controls.damping;
+            massValue.textContent = controls.mass;
+
+            ball.style.transform = `translateY(0) scale(${controls.mass}`
+        };
+
+        function updateAnimation() {
+            animate({
+                type: "spring",
+                from: 0,
+                to: 300,
+                stiffness: controls.stiffness,
+                damping: controls.damping,
+                mass: controls.mass,
+                onUpdate: (v) => {
+                    ball.style.transform = `translateY(${v}px) scale(${controls.mass}`
+                }
+            });
+        }
+
+
+        stiffnessInput.addEventListener("input", updateControls);
+        dampingInput.addEventListener("input", updateControls);
+        massInput.addEventListener("input", updateControls);
+
+        playBtn.addEventListener("click", updateAnimation)
+
+
+    </script>
+</body>
+</html>

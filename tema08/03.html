@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejemplo AniJS – Click</title>
+    <link rel="stylesheet" href="https://anijs.github.io/lib/anicollection/anicollection.css">
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background: #E5F6FB;
+        }
+        button {
+            background: #0098CE;
+            color: #fff;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.25rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<button
+        data-anijs="
+      if: click,
+      do: bounce animated
+    "
+>
+    ¡Rebotar!
+</button>
+<script src="lib/anijs/anijs-min.js"></script>
+</body>
+</html>

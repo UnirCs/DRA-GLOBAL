@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Parallax de paisaje</title>
+    <!-- Basado en https://codepen.io/GeoxCodes/pen/zWNNZP -->
+    <style>
+        :root {
+            --foregroundDuration: 30s;
+            --hillsDuration: 60s;
+            --rocks1Duration: 120s;
+            --rocks2Duration: 240s;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        section {
+            margin: 0;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: #C0B3A0;
+        }
+
+        .content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .parallax {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: url("img/background.jpg");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .parallax .layer {
+            position: absolute;
+            width: 400%;
+        }
+
+        .parallax .foreground {
+            height: 50%;
+            bottom: 0;
+            background: url("img/foreground.png") repeat-x;
+            background-size: 25% 100%;
+            animation: slideshow var(--foregroundDuration) linear infinite;
+        }
+
+        .parallax .hills {
+            height: 40%;
+            bottom: 15%;
+            background: url("img/hills.png") repeat-x;
+            background-size: 25% 100%;
+            animation: slideshow var(--hillsDuration) linear infinite;
+        }
+
+        .parallax .rocks1 {
+            height: 35%;
+            bottom: 25%;
+            background: url("img/rocks1.png") repeat-x;
+            background-size: 25% 100%;
+            animation: slideshow var(--rocks1Duration) linear infinite;
+        }
+
+        .parallax .rocks2 {
+            height: 40%;
+            bottom: 15%;
+            background: url("img/rocks2.png") repeat-x;
+            background-size: 25% 100%;
+            animation: slideshow var(--rocks2Duration) linear infinite;
+        }
+
+        @keyframes slideshow {
+            0% {
+                transform: translateX(0%);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <div class="parallax">
+        <div class="layer rocks2"></div>
+        <div class="layer rocks1"></div>
+        <div class="layer hills"></div>
+        <div class="layer foreground"></div>
+    </div>
+</div>
+</body>
+</html>

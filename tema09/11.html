@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Three-js | Modelo GLTF + OrbitControls</title>
+    <style>
+        :root{
+            --color-primary:#0055ff;
+            --color-accent:#ff7b00;
+            --color-bg:#f5f7fa;
+        }
+        body{margin:0;background:var(--color-bg);}
+        canvas{display:block;}
+        .loader{
+            position:fixed;inset:0;display:grid;place-items:center;
+            font-family:system-ui,sans-serif;color:var(--color-primary);
+        }
+    </style>
+
+    <!-- 1 · IMPORT MAP: asocia el nombre “three” al archivo del CDN -->
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://unpkg.com/three@0.162.0/build/three.module.js"
+          }
+        }
+    </script>
+</head>
+<body>
+<div class="loader" id="loader">Cargando… 0 %</div>
+
+<script type="module">
+    /* 2 · Importaciones: los módulos auxiliares siguen usando la ruta completa,
+          pero ahora, cuando ellos mismos ponen   import { ... } from 'three';
+          el import map ya sabe dónde encontrarlo. */
+    import * as THREE        from 'three';
+    import { GLTFLoader }    from 'https://unpkg.com/three@0.162.0/examples/jsm/loaders/GLTFLoader.js';
+    import { OrbitControls } from 'https://unpkg.com/three@0.162.0/examples/jsm/controls/OrbitControls.js';
+
+    /* 3 · Escena y cámara */
+    const scene  = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 1000);
+    camera.position.set(0, 1.2, 3);
+
+    /* 4 · Iluminación */
+    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+    dirLight.position.set(2, 3, 4);
+    scene.add(dirLight);
+
+    /* 5 · Renderizador */
+    const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+    renderer.setSize(innerWidth, innerHeight);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    document.body.appendChild(renderer.domElement);
+
+    /* 6 · Controles */
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping   = true;
+    controls.autoRotate      = true;
+    controls.autoRotateSpeed = 3;
+
+    /* 7 · Carga de modelo GLTF */
+    const loaderDiv = document.getElementById('loader');
+    const loader    = new GLTFLoader();
+
+    loader.load(
+        'https://models.babylonjs.com/CornellBox/cornellBox.glb',
+        (gltf)=>{
+            scene.add(gltf.scene);
+            loaderDiv.remove();
+        },
+        (prog)=>{
+            const pct = Math.round(prog.loaded / prog.total * 100);
+            loaderDiv.textContent = `Cargando… ${pct} %`;
+        },
+        (err)=> loaderDiv.textContent = 'Error al cargar modelo'
+    );
+
+    /* 8 · Bucle de animación */
+    function animate(){
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    /* 9 · Ajuste responsivo */
+    addEventListener('resize', ()=>{
+        camera.aspect = innerWidth/innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(innerWidth, innerHeight);
+    });
+</script>
+</body>
+</html>

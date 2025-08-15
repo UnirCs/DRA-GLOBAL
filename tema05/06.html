@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Tarjeta 3D avanzada</title>
+    <style>
+        body {
+            background: #F0F4F8;
+            font-family: sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .escena {
+            width: 260px;
+            height: 360px;
+            perspective: 800px;
+            perspective-origin: right center;
+        }
+
+        .tarjeta {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s ease;
+            transform-origin: left center;
+        }
+
+        .escena:hover .tarjeta {
+            transform: rotateY(180deg);
+        }
+
+        .cara {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 1rem;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .frente {
+            background: #0098CE;
+        }
+
+        .reverso {
+            background: #CE5B00;
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body>
+
+<div class="escena">
+    <div class="tarjeta">
+        <div class="cara frente">Frontal</div>
+        <div class="cara reverso">Reverso</div>
+    </div>
+</div>
+
+</body>
+</html>

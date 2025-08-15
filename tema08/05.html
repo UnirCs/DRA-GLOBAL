@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejemplo Lottie – Básico</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #E5F6FB;    /* Claro 2 – fondo */
+        }
+        canvas {
+            border: 2px solid #CCCCCC; /* Neutral claro */
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+<canvas id="lottieCanvas" width="400" height="400"></canvas>
+<script type="module">
+    import { DotLottie } from 'https://cdn.skypack.dev/@lottiefiles/dotlottie-web';
+
+    const canvas = document.getElementById('lottieCanvas');
+    const player = new DotLottie({
+        canvas,
+        src: 'lib/lottie/animation1.lottie',
+        loop: true,
+        autoplay: true
+    });
+</script>
+</body>
+</html>

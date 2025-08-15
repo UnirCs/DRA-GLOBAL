@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Long / Drop Frames</title>
+
+    <style>
+        /* Caja que se mueve */
+        #box{
+            width:80px;
+            height:80px;
+            background:#FFA25B;
+            position:absolute;
+            top:120px;
+            /* NO usamos transform → forzamos layout */
+        }
+        body{
+            height:100vh;
+            overflow:hidden;
+            background:linear-gradient(
+                    45deg,
+                    #006C94,
+                    #333333
+            );
+            color:#333333;
+            font-family:system-ui, sans-serif;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+
+<script>
+    let x = 0;
+
+    // 1) Lee offsetLeft (sincroniza layout)
+    // 2) Escribe left      (invalida layout)
+    // 3) Añade un bloqueo artificial de 6 ms
+    function moveSlow(){
+        x += 4;
+        const el = document.getElementById('box');
+
+        /* Lectura síncrona */
+        void el.offsetLeft;
+
+        /* Escritura que causa re-layout y repaint */
+        el.style.left = x + 'px';
+
+        /* Bloqueo CPU para exagerar el problema */
+        const start = performance.now();
+        while (performance.now() - start < 60){}
+
+        if (x < 800) requestAnimationFrame(moveSlow);
+    }
+
+    requestAnimationFrame(moveSlow);
+</script>
+</body>
+</html>

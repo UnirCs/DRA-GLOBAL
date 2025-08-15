@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spinner Animado</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: radial-gradient(circle, rgba(52, 152, 219, 1) 0%, rgba(41, 128, 185, 1) 100%);
+            overflow: hidden;
+        }
+        .spinner-container {
+            transform: scale(0);
+            display: none;
+        }
+        /* Spinner */
+        .spinner {
+            width: 80px;
+            height: 80px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top-color: rgba(255, 255, 255, 0.8);
+            border-left-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 0 15px 5px rgba(52, 152, 219, 0.8);
+        }
+        .spinner::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            border-top-color: rgba(255, 255, 255, 0.8);
+            border-left-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: outerSpin 3s linear infinite;
+        }
+        .spinner::after {
+            content: "";
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            width: 60%;
+            height: 60%;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.6);
+            animation: blink 4s infinite alternate;
+        }
+
+        .spinner.active {
+            animation: spin 2s linear infinite, pulse 2s infinite;;
+        }
+        .scaleOut {
+            animation: scaleOut 0.5s ease-in;
+        }
+
+        .scaleIn {
+            animation: scaleIn 0.5s ease-out;
+            animation-fill-mode: forwards;
+        }
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        @keyframes outerSpin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(-360deg);
+            }
+        }
+        @keyframes scaleIn {
+            from {
+                transform: scale(0) rotate(0deg);
+            }
+            to {
+                transform: scale(1) rotate(360deg);
+            }
+        }
+
+        @keyframes scaleOut {
+            from {
+                transform: scale(1);
+                opacity: 1;
+            }
+            to {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+        @keyframes blink {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 0.3;
+            }
+        }
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 15px 5px rgba(52, 152, 219, 0.8);
+            }
+            50% {
+                box-shadow: 0 0 40px 20px rgba(52, 152, 219, 0.6);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="spinner-container">
+        <div class="spinner active" id="spinner"></div>
+    </div>
+    <script>
+        // Referencia al spinner
+        const spinnerContainer = document.querySelector('.spinner-container');
+        let isSpinnerVisible = false;
+
+        // Evento para alternar la animación al hacer clic en el documento
+        document.addEventListener('click', () => {
+            if (isSpinnerVisible) {
+                spinnerContainer.classList.add('scaleOut');
+                spinnerContainer.classList.remove('scaleIn');
+                spinnerContainer.addEventListener('animationend', () => {
+                    if (spinnerContainer.classList.contains('scaleOut')) {
+                        spinnerContainer.style.display = 'none';
+                        isSpinnerVisible = false;
+                    }
+                });
+            } else {
+                spinnerContainer.classList.remove('scaleOut');
+                spinnerContainer.classList.add('scaleIn');
+                spinnerContainer.style.display = 'block';
+                isSpinnerVisible = true;
+            }
+        });
+    </script>
+</body>
+</html>

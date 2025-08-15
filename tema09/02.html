@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>WAAPI – Botón pulso</title>
+    <style>
+        :root{
+            --color-primary:#0055ff;
+            --color-accent:#ff7b00;
+            --color-bg:#f5f7fa;
+        }
+        body{
+            margin:0;
+            height:100vh;
+            display:grid;
+            place-content:center;
+            background:var(--color-bg);
+            font-family:system-ui;
+        }
+        .button{
+            padding:1rem 2rem;
+            background:var(--color-primary);
+            color:#fff;
+            border:none;
+            border-radius:8px;
+            font-size:1rem;
+            cursor:pointer;
+            box-shadow:0 4px 10px rgba(0,0,0,.15);
+            transition:box-shadow .3s;
+        }
+        .button:focus-visible{
+            outline:2px solid var(--color-accent);
+        }
+    </style>
+</head>
+<body>
+
+<button class="button">Pulsa aquí</button>
+
+<script>
+    const btn = document.querySelector('.button');
+    const pulse = btn.animate(
+        [
+            { transform: 'scale(1)',   background: 'var(--color-primary)' },
+            { transform: 'scale(1.1)', background: 'var(--color-accent)'  }
+        ],
+        {
+            duration: 600,
+            easing: 'ease-in-out',
+            iterations: Infinity,
+            direction: 'alternate'
+        }
+    );
+
+    // Alterna la velocidad cada vez que se hace clic
+    btn.addEventListener('click', () => {
+        pulse.updatePlaybackRate(pulse.playbackRate === 1 ? 2 : 1);
+    });
+</script>
+
+</body>
+</html>

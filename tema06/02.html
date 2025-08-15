@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring interactivo - Popmotion 11</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 2rem;
+            background-color: #F0F4F8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        h2 {
+            color: #006A91;
+        }
+
+        .zona {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .bola {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #0098CE;
+            position: relative;
+        }
+
+        #bola-css {
+            transition: transform 0.4s ease-in-out;
+        }
+
+        .boton {
+            background-color: #CE5B00;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .control {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .control label {
+            font-size: 0.9rem;
+            color: #1A1A1A;
+        }
+
+        .slider {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Transición CSS</h2>
+<div class="zona">
+    <div id="bola-css" class="bola"></div>
+    <button id="btn-css" class="boton">Mover con transición</button>
+</div>
+
+<h2>Animación Spring (Popmotion v11)</h2>
+<div class="zona">
+    <div id="bola-spring" class="bola"></div>
+    <button id="btn-spring" class="boton">Mover con spring</button>
+</div>
+
+<div class="zona">
+    <div class="control">
+        <label for="stiffness">Rigidez (stiffness): <span id="stiffness-valor">300</span></label>
+        <input type="range" id="stiffness" class="slider" min="50" max="1000" value="300">
+    </div>
+    <div class="control">
+        <label for="damping">Fricción (damping): <span id="damping-valor">20</span></label>
+        <input type="range" id="damping" class="slider" min="1" max="100" value="20">
+    </div>
+    <div class="control">
+        <label for="damping">Masa (mass): <span id="mass-valor">20</span></label>
+        <input type="range" id="mass" class="slider" min="1" max="100" value="20">
+    </div>
+</div>
+
+<script type="module">
+    import { animate, spring } from 'https://unpkg.com/motion@11.0.0/dist/motion.esm.js';
+
+
+    const bolaSpring = document.getElementById('bola-spring');
+    const btnSpring = document.getElementById('btn-spring');
+
+    let movidaSpring = false;
+
+    const stiffnessInput = document.getElementById('stiffness');
+    const dampingInput = document.getElementById('damping');
+    const massInput = document.getElementById('mass');
+    const stiffnessValor = document.getElementById('stiffness-valor');
+    const dampingValor = document.getElementById('damping-valor');
+    const massValor = document.getElementById('mass-valor');
+
+    // Actualizar textos
+    stiffnessInput.addEventListener('input', () => {
+        stiffnessValor.textContent = stiffnessInput.value;
+    });
+
+    dampingInput.addEventListener('input', () => {
+        dampingValor.textContent = dampingInput.value;
+    });
+
+    massInput.addEventListener('input', () => {
+        massValor.textContent = massInput.value;
+    });
+
+    btnSpring.addEventListener('click', () => {
+        movidaSpring = !movidaSpring;
+
+        animate(bolaSpring, {
+            x: movidaSpring ? 150 : 0
+        }, {
+            easing: spring({
+                stiffness: parseFloat(stiffnessInput.value),
+                damping: parseFloat(dampingInput.value),
+                mass: parseFloat(massInput.value)
+            })
+        });
+    });
+</script>
+
+<script>
+    // Lógica para la bola con transición CSS
+    const bolaCSS = document.getElementById('bola-css');
+    const btnCSS = document.getElementById('btn-css');
+
+    let movidaCSS = false;
+    btnCSS.addEventListener('click', () => {
+        movidaCSS = !movidaCSS;
+        bolaCSS.style.transform = movidaCSS ? 'translateX(150px)' : 'translateX(0)';
+    });
+</script>
+
+</body>
+</html>

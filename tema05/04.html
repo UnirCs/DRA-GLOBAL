@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Comparativa de perspectiva en 3D</title>
+    <style>
+        body {
+            background: #F0F4F8;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 4rem 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .escena {
+            width: 180px;
+            height: 200px;
+            perspective-origin: center;
+            perspective: 1000px; /* valor por defecto, se sobreescribirá */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed #ccc;
+            border-radius: 1rem;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        .escena[data-perspectiva="alta"] {
+            perspective: 600px;
+        }
+
+        .escena[data-perspectiva="media"] {
+            perspective: 300px;
+        }
+
+        .escena[data-perspectiva="baja"] {
+            perspective: 100px;
+        }
+
+        .tarjeta {
+            width: 100%;
+            height: 100%;
+            background: #0098CE;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            transition: transform 0.8s ease;
+            transform-style: preserve-3d;
+            backface-visibility: visible;
+        }
+
+        .escena:hover .tarjeta {
+            transform: rotateY(180deg);
+            background: #006A91;
+        }
+
+        .etiqueta {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <div class="escena" data-perspectiva="alta">
+        <div class="tarjeta">600px</div>
+    </div>
+    <div class="etiqueta">Perspectiva alta</div>
+</div>
+
+<div>
+    <div class="escena" data-perspectiva="media">
+        <div class="tarjeta">300px</div>
+    </div>
+    <div class="etiqueta">Perspectiva media</div>
+</div>
+
+<div>
+    <div class="escena" data-perspectiva="baja">
+        <div class="tarjeta">100px</div>
+    </div>
+    <div class="etiqueta">Perspectiva baja</div>
+</div>
+
+</body>
+</html>

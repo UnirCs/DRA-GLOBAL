@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modal con Overlay</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: #E5F6FB;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: sans-serif;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        button {
+            padding: 12px 24px;
+            background-color: #0098CE;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s linear;
+        }
+
+        .overlay.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Modal */
+        .modal {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transform: scale(0.6);
+            opacity: 0;
+            transition: transform 250ms 150ms ease-out, opacity 0.2s 150ms ease-out;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .modal.visible {
+            transform: scale(1);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+<button id="toggleModal">Mostrar modal</button>
+
+<!-- Overlay + Modal -->
+<div id="overlay" class="overlay">
+    <div id="modal" class="modal">
+        <p>Este contenido aparece con una animación y un fondo difuminado.</p>
+        <button id="closeModal">Cerrar</button>
+    </div>
+</div>
+
+<script>
+    const overlay = document.getElementById('overlay');
+    const modal = document.getElementById('modal');
+    const toggle = document.getElementById('toggleModal');
+    const close = document.getElementById('closeModal');
+
+    toggle.addEventListener('click', () => {
+        overlay.classList.add('visible');
+        modal.classList.add('visible');
+    });
+
+    close.addEventListener('click', () => {
+        modal.classList.remove('visible');
+        overlay.classList.remove('visible');
+    });
+
+    // Cierra la modal al hacer clic fuera de ella
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            modal.classList.remove('visible');
+            overlay.classList.remove('visible');
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Animación spring siguiendo cursor</title>
+    <style>
+        .ball {
+            width: 20px;
+            height: 20px;
+            background-color: #0098CE;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+<div class="ball"></div>
+
+<script src="https://unpkg.com/popmotion@11.0.5/dist/popmotion.js"></script>
+
+<script type="module">
+    import { animate } from "https://cdn.jsdelivr.net/npm/motion@12.16.0/+esm"
+    const ball = document.querySelector(".ball")
+
+    let targetX = 0;
+    let targetY = 0;
+
+    animate(
+        ball,
+        { transa: 90 },
+        { type: "spring", repeat: Infinity, repeatDelay: 0.2 }
+    )
+
+    document.addEventListener("mousemove", e => {
+
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Matter-js | Nevada uniforme</title>
+    <style>
+        :root{ --color-bg:#0e1116; }
+        html,body{margin:0;height:100%;}
+        body{background:var(--color-bg);}
+        canvas{display:block;width:100%;height:100%;}
+    </style>
+</head>
+<body>
+<canvas id="escena"></canvas>
+
+<script src="https://unpkg.com/matter-js@0.20.0/build/matter.min.js"></script>
+<script>
+    const { Engine, Render, Runner, Bodies, World, Events, Body } = Matter;
+
+    /* 1 – motor y render */
+    const engine = Engine.create({
+        gravity:{ x:0, y:0.25 }          // caída suave
+    });
+    engine.enableSleeping = false;      // nunca “duerme” cuerpos
+
+    const canvas = document.getElementById('escena');
+    canvas.width = innerWidth; canvas.height = innerHeight;
+
+    const render = Render.create({
+        canvas, engine,
+        options:{ width:innerWidth, height:innerHeight,
+            wireframes:false, background:'var(--color-bg)' }
+    });
+    Render.run(render);
+    Runner.run(Runner.create(), engine);
+
+    /* 2 – generar copos */
+    const COPOS = 300;
+    function nuevoCopo(x = Math.random()*innerWidth,
+                       y = Math.random()*-innerHeight){
+        return Bodies.circle(x, y,
+            2 + Math.random()*3,
+            { inertia:Infinity, friction:0, restitution:0.3,
+                render:{ fillStyle:'#ffffff' } });
+    }
+    for(let i=0;i<COPOS;i++) World.add(engine.world, nuevoCopo());
+
+    /* 3 – reciclado vertical y horizontal */
+    Events.on(engine, 'afterUpdate', () => {
+        const w = innerWidth,  h = innerHeight,  margen = 30;
+        engine.world.bodies.forEach(b => {
+            if (b.position.y >  h + margen) {               // salió por abajo
+                Body.setPosition(b, { x:Math.random()*w, y:-margen });
+            }
+            else if (b.position.x < -margen) {              // salió por la izquierda
+                Body.setPosition(b, { x:w + margen, y:b.position.y });
+            }
+            else if (b.position.x >  w + margen) {          // salió por la derecha
+                Body.setPosition(b, { x:-margen, y:b.position.y });
+            }
+        });
+    });
+
+    /* 4 – viento lateral con inercia */
+    setInterval(() => {
+        engine.gravity.x = (Math.random()-0.5)*0.25;      // soplo suave L↔R
+    }, 4000);
+
+    /* 5 – responsivo */
+    addEventListener('resize', () => {
+        canvas.width = innerWidth; canvas.height = innerHeight;
+        render.options.width = innerWidth;
+        render.options.height = innerHeight;
+        Render.lookAt(render,
+            { min:{x:0,y:0}, max:{x:innerWidth,y:innerHeight} });
+    });
+</script>
+</body>
+</html>

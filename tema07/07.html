@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Basado en https://scroll-driven-animations.style/demos/horizontal-section/css/ -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scroll horizontal con view-timeline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: sans-serif;
+            background-color: #F0F4F8;
+            color: #1A1A1A;
+            overflow-x: hidden;
+        }
+
+        h1, h2, p {
+            margin: 1rem;
+        }
+
+        section.intro {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #66C5E4;
+            color: #1A1A1A;
+            text-align: center;
+        }
+
+        #sectionPin {
+            height: 500vh;
+            overflow: visible;
+
+            view-timeline-name: --section-pin-tl;
+            view-timeline-axis: block;
+        }
+
+        .pin-wrap-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow-x: hidden;
+            background-color: #F0F4F8;
+            display: flex;
+            align-items: center;
+        }
+
+        .pin-wrap {
+            height: 100vh;
+            width: 250vmax;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            padding: 2rem;
+            will-change: transform;
+            animation: move linear forwards;
+            animation-timeline: --section-pin-tl;
+            animation-range: contain 0% contain 100%;
+        }
+
+        @keyframes move {
+            to {
+                transform: translateX(calc(-100% + 100vw));
+            }
+        }
+
+        .pin-wrap img {
+            height: 80vh;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 5px solid #0098CE; /* principal */
+        }
+
+        section.outro {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #CE5B00;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<section class="intro">
+    <div>
+        <h1>Desplázate para explorar</h1>
+        <p>Scroll vertical que activa desplazamiento horizontal con view-timeline</p>
+    </div>
+</section>
+
+<section id="sectionPin">
+    <div class="pin-wrap-sticky">
+        <div class="pin-wrap">
+            <img src="https://picsum.photos/id/1015/800/600" alt="Imagen 1" />
+            <img src="https://picsum.photos/id/1016/800/600" alt="Imagen 2" />
+            <img src="https://picsum.photos/id/1018/800/600" alt="Imagen 3" />
+        </div>
+    </div>
+</section>
+
+<section class="outro">
+    <div>
+        <h2>¡Gracias por ver!</h2>
+        <p>Este efecto se logró solo con CSS moderno y view-timeline.</p>
+    </div>
+</section>
+</body>
+
+</html>

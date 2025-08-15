@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <title>Ani JS Accordion</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body{
+            font-family: helvetica, sans-serif;
+            font-size: 16px;
+        }
+        .accordion {
+            width: 500px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: auto;
+        }
+        .accordion .heading {
+            height: 50px;
+            line-height: 50px;
+            font-size: 17px;
+            cursor: pointer;
+            color: #fff;
+            padding-left: 15px;
+        }
+        .accordion .heading .fa-chevron-circle-down{
+            float: right;
+            padding: 15px;
+        }
+        .accordion .item .content {
+            padding: 0 20px;
+            background: #eee;
+            font-size: 14px;
+            overflow:hidden;
+            color: #7f8c8d;
+            height:0;
+            transition: height 0.3s ease-in-out, padding 0.3s ease-in-out;
+        }
+        .accordion .item.open .content {
+            height: 100px;
+            padding: 20px;
+        }
+        .orange{
+            background-color: #FBB44C;
+        }
+
+        .pink{
+            background-color: #FC797A;
+        }
+
+        .blue{
+            background-color: #3498db;
+        }
+        .flash {
+            --animate-duration: 0.4s;
+        }
+    </style>
+</head>
+<body>
+    <div class="accordion"
+         data-anijs="   if: click, on: .heading, do: $removeClass open, to: .open;
+                        if: click, on: .heading, do: $toggleClass open, to: $parent target;
+                        if: mouseenter, on: .heading, do: animate__flash, to: $children target;"
+    >
+        <div class="item">
+            <div class="heading blue">
+                <div class="flash animate__animated">
+                    <i class="fa fa-bell"></i>
+                    <span>Notifications</span>
+                    <i class="fa fa-chevron-circle-down"></i>
+                </div>
+            </div>
+            <div class="content">Content of notifications</div>
+        </div>
+
+        <div class="item">
+            <div class="heading orange">
+                <div class="flash animate__animated">
+                    <i class="fa fa-camera"></i>
+                    <span>Images</span>
+                    <i class="fa fa-chevron-circle-down"></i>
+                </div>
+            </div>
+            <div class="content">Content of images</div>
+        </div>
+
+        <div class="item">
+            <div class="heading pink">
+                <div class="flash animate__animated">
+                    <i class="fa fa-music"></i>
+                    <span>Music</span>
+                    <i class="fa fa-chevron-circle-down"></i>
+                </div>
+            </div>
+            <div class="content">Content of music</div>
+        </div>
+    </div>
+    <script src="https://anijs.github.io/lib/anijs/anijs.js"></script>
+    <script src="https://anijs.github.io/lib/anijs/helpers/dom/anijs-helper-dom.js"></script>
+</body>
+</html>

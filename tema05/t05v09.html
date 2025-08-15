@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Card Carousel</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: #f5f5dc;
+            color: #000;
+            overflow: hidden;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            perspective: 1000px;
+        }
+
+        .carousel {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-style: preserve-3d;
+            transition: transform 0.4s ease;
+        }
+
+        .card {
+            position: absolute;
+            width: 150px;
+            height: 200px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 4rem;
+            color: #f5f5dc;
+            transform-origin: center;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            bottom: -50px;
+            width: 100%;
+        }
+
+        .controls button {
+            background: #fff;
+            border: none;
+            color: #121212;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .controls button:hover {
+            background: #f4f4f4;
+            transform: scale(1.1);
+        }
+
+        .card:nth-child(1) {
+            transform: rotateY(0deg) translateZ(180px);
+            background: linear-gradient(135deg, #ff7eb3, #ff758c);
+        }
+
+        .card:nth-child(2) {
+            transform: rotateY(60deg) translateZ(180px);
+            background: linear-gradient(135deg, #7ef7ff, #75aaff);
+        }
+
+        .card:nth-child(3) {
+            transform: rotateY(120deg) translateZ(180px);
+            background: linear-gradient(135deg, #7eff94, #75ffaa);
+        }
+
+        .card:nth-child(4) {
+            transform: rotateY(180deg) translateZ(180px);
+            background: linear-gradient(135deg, #ffc77e, #ffaa75);
+        }
+
+        .card:nth-child(5) {
+            transform: rotateY(240deg) translateZ(180px);
+            background: linear-gradient(135deg, #d67eff, #aa75ff);
+        }
+
+        .card:nth-child(6) {
+            transform: rotateY(300deg) translateZ(180px);
+            background: linear-gradient(135deg, #ff7e7e, #ff7575);
+        }
+    </style>
+</head>
+<body>
+<div class="carousel-container">
+    <div class="carousel" id="carousel">
+        <div class="card">1</div>
+        <div class="card">2</div>
+        <div class="card">3</div>
+        <div class="card">4</div>
+        <div class="card">5</div>
+        <div class="card">6</div>
+    </div>
+    <div class="controls">
+        <button id="prev">◀</button>
+        <button id="next">▶</button>
+    </div>
+</div>
+
+<script>
+    const carousel = document.getElementById('carousel');
+    const prevButton = document.getElementById('prev');
+    const nextButton = document.getElementById('next');
+    let angle = 0;
+
+    prevButton.addEventListener('click', () => {
+        angle += 60; // Rotate right
+        carousel.style.transform = `rotateY(${angle}deg)`;
+    });
+
+    nextButton.addEventListener('click', () => {
+        angle -= 60; // Rotate left
+        carousel.style.transform = `rotateY(${angle}deg)`;
+    });
+</script>
+</body>
+</html>

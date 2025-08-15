@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Three-js | Cubo giratorio</title>
+    <style>
+        :root {
+            --color-primary: #0055ff;
+            --color-bg: #f5f7fa;
+        }
+
+        body {
+            margin: 0;
+            background: var(--color-bg);
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as THREE from 'https://unpkg.com/three@0.162.0/build/three.module.js';
+
+    /* 1. Escena + cámara */
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+        75, innerWidth / innerHeight, 0.1, 1000
+    );
+    camera.position.z = 2.5;
+
+    /* 2. Cubo */
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const material = new THREE.MeshStandardMaterial({color: 'var(--color-primary)'});
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+
+    /* 3. Luz para sombreado */
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 1.2));
+
+    /* 4. Renderizador */
+    const renderer = new THREE.WebGLRenderer({antialias: true});
+    renderer.setSize(innerWidth, innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    /* 5. Animación */
+    function animate() {
+        requestAnimationFrame(animate);
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.015;
+        renderer.render(scene, camera);
+    }
+
+    animate();
+
+    /* 6. Respuesta a cambios de tamaño */
+    addEventListener('resize', () => {
+        camera.aspect = innerWidth / innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(innerWidth, innerHeight);
+    });
+</script>
+</body>
+</html>
