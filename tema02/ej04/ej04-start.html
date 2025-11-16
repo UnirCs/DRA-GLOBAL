@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html class="no-js" lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>anim</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background-color: #9db2c1;
+        }
+        .playground{
+            display: flex;
+            height: 100vh;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .animation-box {
+            border: 0;
+            padding: 12px 34px;
+            background-color: #3498db;
+            display: flex;
+            color: white;
+            font-weight: bold;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+        }
+        .card{
+            padding: 1em;
+            box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .16);
+            background-color: #fff;
+            border-radius: 6px;
+            width: 80%;
+            height: 300px;
+            transform: scale(0);
+            animation: show-card 1s ease;
+            animation-play-state: paused;
+            animation-fill-mode: forwards;
+        }
+        .show {
+            animation-play-state: running;
+        }
+        @keyframes show-card {
+            0%{
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1);
+            }
+            60% {
+                transform: scale(1) rotate(-4deg);
+            }
+            80% {
+                transform: scale(1) rotate(4deg);
+            }
+            100% {
+                transform: scale(1) rotate(0);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="playground">
+    <div class="card" data-responsive="20" id="card">
+    </div>
+    <button type="button" id="boton" title="CTA" class="animation-box">
+        Animation
+    </button>
+</div>
+<script>
+    const boton = document.querySelector('#boton');
+    const card = document.querySelector('#card');
+    function animar(){
+        card.classList.add('show');
+    }
+    boton.addEventListener('click',animar);
+</script>
+</body>
+</html>

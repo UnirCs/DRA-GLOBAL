@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Accordions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+        .slide{
+            padding: 20px;
+            width: 30px;
+            height: 300px;
+            border-radius: 20px;
+            transition: width 500ms ease;
+            &:hover {
+                width: 300px;
+            }
+        }
+        .slide-1{
+            background: url('img/01.jpg') no-repeat;
+        }
+        .slide-2{
+            background: url('img/02.webp') no-repeat;
+        }
+        .slide-3{
+            background: url('img/03.jpg') no-repeat;
+        }
+        .slide-content {
+            height: 100%;
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-start;
+            > *{
+                margin: 10px;
+                flex: 0;
+            }
+        }
+        .slide-title-container {
+            display: inline-block;
+            transition: transform 500ms ease;
+            transform: translate(-50%, 0);
+        }
+        .slide-title {
+            display: inline-block;
+            transition: transform 500ms ease;
+            transform: rotate(-90deg);
+        }
+        .slide:hover .slide-title {
+            transform: rotate(0) ;
+        }
+
+        .slide:hover .slide-title-container  {
+            transform: translate(0, 0);
+        }
+        .slide-text {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: transform 500ms ease, opacity 500ms ease;
+        }
+        .slide:hover .slide-text {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+<main class="container">
+    <section class="slide slide-1">
+        <div class="slide-content">
+            <div class="slide-title-container">
+                <h2 class="slide-title">FERN</h2>
+            </div>
+            <p class="slide-text">lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
+        </div>
+    </section>
+    <section class="slide slide-2">
+        <div class="slide-content">
+            <div class="slide-title-container">
+                <h2 class="slide-title">FLORA</h2>
+            </div>
+            <p class="slide-text">lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
+        </div>
+    </section>
+    <section class="slide slide-3">
+        <div class="slide-content">
+            <div class="slide-title-container">
+                <h2 class="slide-title">MONTERO</h2>
+            </div>
+            <p class="slide-text">lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
+        </div>
+    </section>
+</main>
+</body>
+</html>

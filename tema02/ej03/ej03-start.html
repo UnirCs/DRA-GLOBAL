@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html class="no-js" lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>anim</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background-color: #9db2c1;
+        }
+        .playground{
+            display: flex;
+            height: 100vh;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .animation-box {
+            border: 0;
+            padding: 12px 34px;
+            background-color: #3498db;
+            display: flex;
+            color: white;
+            font-weight: bold;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+        }
+        .card{
+            padding: 1em;
+            box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .16);
+            background-color: #fff;
+            border-radius: 6px;
+            width: 80%;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+<div class="playground">
+    <div class="card" data-responsive="20" id="card">
+    </div>
+    <button type="button" id="boton" title="CTA" class="animation-box">
+        Animation
+    </button>
+</div>
+</body>
+</html>
