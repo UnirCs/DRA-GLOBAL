@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo 3 · 12, 24 y 60 fotogramas por segundo</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #f5f6f8; font-family: system-ui, sans-serif; color: #282a34; }
+  .wrap { width: min(900px, 92vw); display: grid; gap: 48px; }
+  .row { display: grid; grid-template-columns: 90px 1fr; align-items: center; gap: 24px; }
+  .label { font-size: 28px; font-weight: 700; }
+  .label span { display: block; font-size: 14px; font-weight: 600; color: #8c909c; letter-spacing: .1em; }
+  .track { position: relative; height: 64px; border-bottom: 2px solid #e2e4e9; }
+  .ball {
+    position: absolute; left: 0; bottom: 4px; width: 56px; height: 56px; border-radius: 50%;
+    background: #1e98cc;
+    animation: move 1.6s infinite alternate;
+  }
+  
+  .f12 .ball { animation-timing-function: steps(19); }   /* 12 fps */
+  .f24 .ball { animation-timing-function: steps(38); }   /* 24 fps */
+  .f60 .ball { animation-timing-function: linear; }      /* 60 fps */
+  @keyframes move { from { transform: translateX(0); } to { transform: translateX(calc(min(900px, 92vw) - 90px - 24px - 56px)); } }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="row f12"><div class="label">12<span>FPS</span></div><div class="track"><div class="ball"></div></div></div>
+    <div class="row f24"><div class="label">24<span>FPS</span></div><div class="track"><div class="ball"></div></div></div>
+    <div class="row f60"><div class="label">60<span>FPS</span></div><div class="track"><div class="ball"></div></div></div>
+  </div>
+</body>
+</html>

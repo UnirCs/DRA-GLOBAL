@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo 2 · Mismo botón, tres duraciones</title>
+<style>
+  body { 
+    margin: 0; 
+    min-height: 100vh; 
+    display: grid; 
+    place-items: center; 
+    background: #f5f6f8; 
+    font-family: system-ui, 
+    sans-serif; color: #282a34; 
+  }
+  .grid { 
+    display: flex; 
+    gap: 56px; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+  }
+  .item { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 18px; 
+  }
+  .btn {
+    padding: 18px 44px; 
+    border: 0; 
+    border-radius: 999px;
+    font-size: 22px; 
+    font-weight: 600; 
+    color: #fff; 
+    cursor: pointer;
+    background: #3b82f6;
+    transition-property: background, transform;
+    transition-timing-function: ease;
+  }
+  .btn:hover { 
+    background: #1e40af; 
+    transform: scale(1.06); 
+  }
+  .brusco  { 
+    transition-duration: 0.05s; 
+  }
+  .natural { 
+    transition-duration: 0.3s; 
+  }
+  .eterno   { 
+    transition-duration: 2s; 
+  }
+  code { 
+    font-size: 18px; font-weight: 600; 
+  }
+  small { 
+    color: #8c909c; font-size: 16px; 
+    }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="item"><button class="btn brusco">Enviar</button><code>0.05s</code><small>brusco</small></div>
+    <div class="item"><button class="btn natural">Enviar</button><code>0.3s</code><small>natural</small></div>
+    <div class="item"><button class="btn eterno">Enviar</button><code>2s</code><small>eterno</small></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+DEMO EN VIVO · SESIÓN 01
+
+Abre los archivos con doble clic en el navegador.
+
+01-boton-inicio.html        Botón sin transición. Es el punto de partida: se añade en directo
+                            "transition: background 0.3s ease;" dentro de .btn.
+02-comparar-duraciones.html Tres botones iguales con 0.05s, 0.3s y 2s para comparar
+                            pasando el ratón por cada uno.
+03-fotogramas-por-segundo.html  Tres bolas moviéndose a 12, 24 y 60 fps.
