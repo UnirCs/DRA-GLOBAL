@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tema 2 · Transiciones y transformaciones</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <!-- ARRANQUE: dos botones iguales, solo cambia una línea de CSS -->
+  <section class="bloque">
+    <h2>Arranque · ¿Cuál se siente mejor?</h2>
+    <div class="fila">
+      <button class="boton boton--seco">Sin transición</button>
+      <button class="boton boton--suave">Con transición</button>
+    </div>
+  </section>
+
+  <!-- BOTÓN: lo construimos en directo -->
+  <section class="bloque">
+    <h2>Botón</h2>
+    <div class="fila">
+      <button class="boton boton--principal">Comprar entrada</button>
+      <span class="vecino">Soy el vecino</span>
+    </div>
+  </section>
+
+  <!-- EL ORDEN IMPORTA: mismas funciones de transform, distinto orden -->
+  <section class="bloque">
+    <h2>El orden importa</h2>
+    <div class="fila orden">
+      <div class="caja-fantasma"><div class="caja caja--a">A</div></div>
+      <div class="caja-fantasma"><div class="caja caja--b">B</div></div>
+    </div>
+  </section>
+
+</body>
+</html>

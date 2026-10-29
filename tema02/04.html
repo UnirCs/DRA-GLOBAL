@@ -24,6 +24,7 @@
 
         .outer {
             border: 1px dashed #FFA25B;
+            cursor: pointer;
         }
 
         .box {
@@ -36,7 +37,6 @@
             color: white;
             font-weight: bold;
             transition: transform 0.5s ease;
-            cursor: pointer;
         }
 
         /* Transformaciones iniciales */
@@ -47,8 +47,10 @@
         .box5 { transform: rotate(15deg); }
         .box6 { transform: skew(10deg, 5deg); }
 
-        /* Al hacer hover, se vuelve al estado original */
-        .box:hover {
+        /* Al pasar el ratón por el recuadro, la caja vuelve a su estado original.
+           El hover va en .outer, que no se mueve: si fuera en .box, la caja
+           se escaparía del cursor y la animación daría tirones. */
+        .outer:hover .box {
             transform: none;
         }
     </style>

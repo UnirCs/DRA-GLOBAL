@@ -101,6 +101,9 @@
     const card = document.getElementById('card');
     function clearAnimations() {
         card.classList.remove('animate-pulse', 'animate-shake', 'animate-pop');
+        // Truco: leer el ancho obliga al navegador a "olvidar" la animación anterior.
+        // Sin esta línea, al pulsar dos veces el mismo botón no se repite.
+        void card.offsetWidth;
     }
 
     function startPulse() {

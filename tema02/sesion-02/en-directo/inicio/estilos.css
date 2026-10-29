@@ -1,0 +1,87 @@
+/* =========================================================
+   Tema 2 · Punto de partida
+   Todo lo que hay aquí es estático: no hay ni una transición.
+   En clase iremos añadiendo el movimiento.
+   ========================================================= */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 2rem;
+  font-family: system-ui, sans-serif;
+  color: #1d1b26;
+  background: #fff;
+  line-height: 1.5;
+}
+
+.bloque {
+  max-width: 640px;
+  margin: 0 auto 3rem;
+}
+
+.bloque h2 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b6880;
+  margin-bottom: 1rem;
+}
+
+.fila {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* ---------- Botón base ---------- */
+.boton {
+  font: inherit;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background: #3b2bd9;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* ARRANQUE: los dos botones cambian igual de color al pasar el ratón */
+.boton--seco:hover,
+.boton--suave:hover {
+  background: #2a1ea3;
+}
+
+/* BOTÓN: aquí empezamos a escribir */
+.boton--principal:hover {
+  background: #2a1ea3;
+}
+
+.vecino {
+  padding: 0.5rem 1rem;
+  background: #f3f2fb;
+  border-radius: 8px;
+}
+
+/* ---------- Cajas para el orden de transform ---------- */
+.orden { gap: 6rem; padding: 2rem 0; }
+
+.caja-fantasma {
+  width: 80px;
+  height: 80px;
+  border: 2px dashed #c9c6dc;
+  border-radius: 8px;
+}
+
+.caja {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  color: #fff;
+  background: #3b2bd9;
+  border-radius: 8px;
+}
+

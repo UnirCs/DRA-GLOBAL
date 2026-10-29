@@ -44,7 +44,7 @@
 
         .overlay.visible {
             opacity: 1;
-            pointer-events: all;
+            pointer-events: auto;
         }
 
         /* Modal */
@@ -55,7 +55,8 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             transform: scale(0.6);
             opacity: 0;
-            transition: transform 250ms 150ms ease-out, opacity 0.2s 150ms ease-out;
+            /* Al cerrar: sin retardo, la modal se va antes que el fondo */
+            transition: transform 150ms ease-in, opacity 150ms ease-in;
             max-width: 400px;
             text-align: center;
         }
@@ -63,6 +64,8 @@
         .modal.visible {
             transform: scale(1);
             opacity: 1;
+            /* Al abrir: espera 150 ms a que aparezca el fondo */
+            transition: transform 250ms 150ms ease-out, opacity 0.2s 150ms ease-out;
         }
     </style>
 </head>
@@ -73,7 +76,7 @@
 <!-- Overlay + Modal -->
 <div id="overlay" class="overlay">
     <div id="modal" class="modal">
-        <p>Este contenido aparece con una animación y un fondo difuminado.</p>
+        <p>Este contenido aparece con una animación y un fondo oscurecido.</p>
         <button id="closeModal">Cerrar</button>
     </div>
 </div>
