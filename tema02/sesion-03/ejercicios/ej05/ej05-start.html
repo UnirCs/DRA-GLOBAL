@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ejercicio 5 · Movimiento reducido</title>
     <style>
+        /* Variables al principio: un solo sitio para cambiar el ritmo */
+        :root {
+            --base-time: 1s;
+            --time-scale: 1;
+            --animated-time: calc(var(--base-time) * var(--time-scale));
+        }
         body{
             margin: 0;
             padding: 0;
@@ -15,11 +21,6 @@
             height: 100vh;
             justify-content: space-around;
             align-items: center;
-        }
-        :root {
-            --base-time: 1s;
-            --time-scale: 1;
-            --animated-time: calc(var(--base-time) * var(--time-scale));
         }
         .animation-box {
             border: 0;
@@ -35,7 +36,7 @@
         .card{
             padding: 1em;
             box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .16);
-            background-color: #708ca5;
+            background-color: #fff;
             border-radius: 6px;
             width: 80%;
             height: 300px;
