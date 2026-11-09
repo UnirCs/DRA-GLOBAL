@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Triggers al cargar y al entrar en pantalla</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: system-ui, sans-serif;
+      color: #1d1b26;
+      background: #fff;
+      line-height: 1.5;
+    }
+
+    .banner {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 2rem;
+      border-radius: 12px;
+      background: #3b2bd9;
+      color: #fff;
+    }
+
+    .banner h1 { margin: 0 0 0.5rem; font-size: 1.6rem; }
+    .banner p { margin: 0; }
+
+    .pista {
+      max-width: 640px;
+      margin: 2rem auto 0;
+      color: #6b6880;
+    }
+
+    .hueco { height: 90vh; }
+
+    .tarjetas {
+      max-width: 640px;
+      margin: 0 auto;
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .tarjeta {
+      padding: 1.5rem;
+      border-radius: 12px;
+      background: #f3f2fb;
+    }
+
+    /* Figura 25 del tema, con la transición corregida:
+       en vez de transition: all, escribimos qué animamos */
+    .animar {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .animar.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Al cargar la página -->
+  <section class="banner animar">
+    <h1>Al cargar la página</h1>
+    <p>Este banner entra cuando el DOM ha terminado de cargar. Recarga la página para verlo otra vez.</p>
+  </section>
+
+  <p class="pista">Baja con la rueda del ratón ↓</p>
+  <div class="hueco"></div>
+
+  <!-- 2. Al entrar en pantalla -->
+  <div class="tarjetas">
+    <article class="tarjeta animar">Al entrar en pantalla · 1</article>
+    <article class="tarjeta animar">Al entrar en pantalla · 2</article>
+    <article class="tarjeta animar">Al entrar en pantalla · 3</article>
+    <article class="tarjeta animar">Al entrar en pantalla · 4</article>
+    <article class="tarjeta animar">Al entrar en pantalla · 5</article>
+  </div>
+  <div class="hueco"></div>
+
+  <script>
+    // 1. Ciclo de vida del DOM (Figura 23 del tema).
+    // Añadimos la clase dentro de requestAnimationFrame para que el navegador
+    // pinte antes el estado inicial; si no, el banner aparece sin animación.
+    window.addEventListener('DOMContentLoaded', () => {
+      requestAnimationFrame(() => {
+        document.querySelector('.banner').classList.add('in-view');
+      });
+    });
+
+    // 2. IntersectionObserver (Figura 24 del tema)
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        }
+      });
+    });
+
+    document.querySelectorAll('.tarjeta.animar').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

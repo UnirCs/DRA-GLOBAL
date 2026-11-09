@@ -4,7 +4,7 @@ Desarrollo de Recursos Animados para Web · UNIR
 
 Abre cualquier `.html` directamente en el navegador. No hace falta instalar nada.
 
-Las demos de esta carpeta son los ficheros que cita el tema (por ejemplo, «Fichero: tema02/01.html»). Los ejercicios y el código de clase están en las carpetas de cada sesión.
+Las demos de esta carpeta son los ficheros que cita el tema (por ejemplo, «Fichero: tema02/01.html»), más `05.html`, que reúne en una página las Figuras 23 a 25. Los ejercicios y el código de clase están en las carpetas de cada sesión.
 
 ## Sesión 2 · Jueves 12 de noviembre · 2.1 a 2.4
 
@@ -14,6 +14,7 @@ Las demos de esta carpeta son los ficheros que cita el tema (por ejemplo, «Fich
 | [`02.html`](02.html) | Por qué importa el orden de las transformaciones | 2.2 |
 | [`03.html`](03.html) | `transform-origin` | 2.2 |
 | [`04.html`](04.html) | Las mismas transformaciones vuelven a su sitio al pasar el ratón, con transición | 2.3, 2.4 |
+| [`05.html`](05.html) | Un banner que entra al cargar la página (DOMContentLoaded) y tarjetas que aparecen al hacer scroll (IntersectionObserver), con el CSS de la Figura 25 | 2.4 |
 | [`07.html`](07.html) | Ventana modal que se abre y se cierra con JavaScript (`addEventListener` y `classList`) | 2.4 |
 | [`t02v03.html`](t02v03.html) | Carrusel vertical. Necesita conexión: las imágenes vienen de picsum.photos | 2.2, 2.3 |
 

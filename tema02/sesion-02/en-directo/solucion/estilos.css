@@ -74,9 +74,12 @@ body {
   box-shadow: 0 6px 16px rgba(59, 43, 217, 0.3);
 }
 
-/* Trigger :focus · quien navega con teclado también ve la respuesta */
-.boton--principal:focus {
-  background: #2a1ea3;
+/* Trigger :focus-visible · anillo solo cuando se llega con el teclado.
+   En clase lo escribimos primero como :focus (también se activa al hacer clic)
+   y después lo cambiamos por :focus-visible. */
+.boton--principal:focus-visible {
+  outline: 3px solid #1E98CC;
+  outline-offset: 3px;
 }
 
 /* Trigger :active · se hunde, y más rápido que el hover */

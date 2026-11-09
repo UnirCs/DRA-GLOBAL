@@ -1,110 +1,112 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Modal con Overlay</title>
     <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            background-color: #E5F6FB;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: sans-serif;
-            flex-direction: column;
-            gap: 40px;
-        }
+      body {
+        margin: 0;
+        height: 100vh;
+        background-color: #e5f6fb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: sans-serif;
+        flex-direction: column;
+        gap: 40px;
+      }
 
-        button {
-            padding: 12px 24px;
-            background-color: #0098CE;
-            color: white;
-            border: none;
-            font-size: 16px;
-            cursor: pointer;
-        }
+      button {
+        padding: 12px 24px;
+        background-color: #0098ce;
+        color: white;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+      }
 
-        /* Overlay */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s linear;
-        }
+      /* Overlay */
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s linear;
+      }
 
-        .overlay.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
+      .overlay.visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
 
-        /* Modal */
-        .modal {
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            transform: scale(0.6);
-            opacity: 0;
-            /* Al cerrar: sin retardo, la modal se va antes que el fondo */
-            transition: transform 150ms ease-in, opacity 150ms ease-in;
-            max-width: 400px;
-            text-align: center;
-        }
+      /* Modal */
+      .modal {
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        transform: scale(0.6);
+        opacity: 0;
+        /* Al cerrar: sin retardo, la modal se va antes que el fondo */
+        transition:
+          transform 150ms ease-in,
+          opacity 150ms ease-in;
+        max-width: 400px;
+        text-align: center;
+      }
 
-        .modal.visible {
-            transform: scale(1);
-            opacity: 1;
-            /* Al abrir: espera 150 ms a que aparezca el fondo */
-            transition: transform 250ms 150ms ease-out, opacity 0.2s 150ms ease-out;
-        }
+      .modal.visible {
+        transform: scale(1);
+        opacity: 1;
+        /* Al abrir: espera 150 ms a que aparezca el fondo */
+        transition:
+          transform 250ms 150ms ease-out,
+          opacity 0.2s 150ms ease-out;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <button id="toggleModal">Mostrar modal</button>
 
-<button id="toggleModal">Mostrar modal</button>
-
-<!-- Overlay + Modal -->
-<div id="overlay" class="overlay">
-    <div id="modal" class="modal">
+    <!-- Overlay + Modal -->
+    <div id="overlay" class="overlay">
+      <div id="modal" class="modal">
         <p>Este contenido aparece con una animación y un fondo oscurecido.</p>
         <button id="closeModal">Cerrar</button>
+      </div>
     </div>
-</div>
 
-<script>
-    const overlay = document.getElementById('overlay');
-    const modal = document.getElementById('modal');
-    const toggle = document.getElementById('toggleModal');
-    const close = document.getElementById('closeModal');
+    <script>
+      const overlay = document.getElementById("overlay");
+      const modal = document.getElementById("modal");
+      const toggle = document.getElementById("toggleModal");
+      const close = document.getElementById("closeModal");
 
-    toggle.addEventListener('click', () => {
-        overlay.classList.add('visible');
-        modal.classList.add('visible');
-    });
+      toggle.addEventListener("click", () => {
+        overlay.classList.add("visible");
+        modal.classList.add("visible");
+      });
 
-    close.addEventListener('click', () => {
-        modal.classList.remove('visible');
-        overlay.classList.remove('visible');
-    });
+      close.addEventListener("click", () => {
+        modal.classList.remove("visible");
+        overlay.classList.remove("visible");
+      });
 
-    // Cierra la modal al hacer clic fuera de ella
-    overlay.addEventListener('click', (e) => {
+      // Cierra la modal al hacer clic fuera de ella
+      overlay.addEventListener("click", (e) => {
         if (e.target === overlay) {
-            modal.classList.remove('visible');
-            overlay.classList.remove('visible');
+          modal.classList.remove("visible");
+          overlay.classList.remove("visible");
         }
-    });
-</script>
-
-</body>
+      });
+    </script>
+  </body>
 </html>

@@ -4,7 +4,9 @@
    En clase iremos añadiendo el movimiento.
    ========================================================= */
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -45,14 +47,7 @@ body {
   color: #fff;
   cursor: pointer;
 }
-
-/* ARRANQUE: los dos botones cambian igual de color al pasar el ratón */
-.boton--seco:hover,
-.boton--suave:hover {
-  background: #2a1ea3;
-}
-
-/* BOTÓN: aquí empezamos a escribir */
+/* BOTÓN Transform */
 .boton--principal:hover {
   background: #2a1ea3;
 }
@@ -63,8 +58,17 @@ body {
   border-radius: 8px;
 }
 
-/* ---------- Cajas para el orden de transform ---------- */
-.orden { gap: 6rem; padding: 2rem 0; }
+/* Botones cambian igual de color al pasar el ratón */
+.boton--seco:hover,
+.boton--suave:hover {
+  background: #2a1ea3;
+}
+
+/* ---------- Orden de transform ---------- */
+.orden {
+  gap: 6rem;
+  padding: 2rem 0;
+}
 
 .caja-fantasma {
   width: 80px;
@@ -84,4 +88,3 @@ body {
   background: #3b2bd9;
   border-radius: 8px;
 }
-
