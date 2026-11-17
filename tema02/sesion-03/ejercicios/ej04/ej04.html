@@ -19,8 +19,10 @@
         .playground{
             display: flex;
             height: 100vh;
-            justify-content: space-around;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            gap: 4rem;
         }
         .animation-box {
             border: 0;
@@ -38,8 +40,8 @@
             box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .16);
             background-color: #fff;
             border-radius: 6px;
-            width: 80%;
-            height: 300px;
+            width: min(80%, 520px);
+            height: 260px;
             transform: scale(0);
             animation: show-card var(--animated-time) ease;
             animation-play-state: paused;
