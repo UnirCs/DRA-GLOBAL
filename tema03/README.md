@@ -4,7 +4,14 @@ Desarrollo de Recursos Animados para Web · UNIR
 
 Abre cualquier `.html` directamente en el navegador. No hace falta instalar nada.
 
-El Tema 3 se ve en una sola sesión. Los ejercicios, la demo y los retos están en la carpeta de la sesión.
+Las demos de esta carpeta son los ficheros que cita el tema (por ejemplo, «Fichero: tema03/01.html»). Los ejercicios, la demo de clase y los retos están en la carpeta de la sesión.
+
+## Ficheros que cita el tema
+
+| Archivo | Qué se ve | Epígrafe |
+|---|---|---|
+| [`01.html`](01.html) | Tres velocidades en tres escenarios: un botón rápido, una tarjeta que se despliega a velocidad media y un modal lento (Figura 2) | 3.2 |
+| [`02.html`](02.html) | Cinco cajas con el mismo movimiento y la misma duración, cada una con una curva: linear, ease, ease-in, ease-out y ease-in-out (Figura 14) | 3.3 |
 
 ## Sesión 4 · Miércoles 25 de noviembre · 3.1 a 3.3
 
