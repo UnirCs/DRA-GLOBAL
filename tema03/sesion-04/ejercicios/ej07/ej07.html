@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ej07 · Carrera de curvas</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; gap: 16px; padding: 0 48px; background: #0b0b0f; font-family: system-ui, sans-serif; color: #f5f2ed; }
+  .pista { position: relative; width: 600px; height: 40px; border-bottom: 2px solid #3d3d4a; }
+  .pista span { position: absolute; left: 60px; top: 10px; font-family: monospace; color: #a8a8b5; }
+  .bola { width: 40px; height: 40px; border-radius: 50%; background: #1e98cc;
+    transition: transform 1.5s var(--curva); }
+  .carrera.salida .bola { transform: translateX(560px); }
+  #linear      { --curva: linear; }
+  #ease        { --curva: ease; }
+  #ease-in     { --curva: ease-in; }
+  #ease-out    { --curva: ease-out; }
+  #ease-in-out { --curva: ease-in-out; }
+  #propia      { --curva: cubic-bezier(0.68, -0.6, 0.32, 1.6); background: #ff5c6e; }
+  button { align-self: flex-start; margin-top: 24px; padding: 12px 24px; border: 0; border-radius: 999px; background: #f2f0e8; font-size: 16px; cursor: pointer; }
+</style>
+</head>
+<body>
+  <div class="carrera" id="carrera">
+    <div class="pista"><span>linear</span><div class="bola" id="linear"></div></div>
+    <div class="pista"><span>ease</span><div class="bola" id="ease"></div></div>
+    <div class="pista"><span>ease-in</span><div class="bola" id="ease-in"></div></div>
+    <div class="pista"><span>ease-out</span><div class="bola" id="ease-out"></div></div>
+    <div class="pista"><span>ease-in-out</span><div class="bola" id="ease-in-out"></div></div>
+    <div class="pista"><span>cubic-bezier</span><div class="bola" id="propia"></div></div>
+  </div>
+  <button id="salida">¡Salida!</button>
+<script>
+  const carrera = document.querySelector('#carrera');
+  document.querySelector('#salida').addEventListener('click', function () {
+    carrera.classList.toggle('salida');
+  });
+</script>
+</body>
+</html>

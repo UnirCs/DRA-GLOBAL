@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reto 1 · Un panel de ajustes (inicio)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #0b0b0f;
+            font-family: system-ui, sans-serif;
+        }
+
+        .panel {
+            width: 380px;
+            padding: 28px;
+            border-radius: 20px;
+            background-color: #f5f2ed;
+            color: #17171d;
+        }
+        /* Con el modo oscuro activado, el panel cambia de colores */
+        .panel.oscuro {
+            background-color: #17171d;
+            color: #f5f2ed;
+        }
+        .panel h1 {
+            margin: 0 0 20px;
+            font-size: 24px;
+        }
+
+        .ajuste {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-top: 1px solid rgba(128, 128, 128, 0.3);
+            font-size: 17px;
+        }
+
+        /* El interruptor: una pista y una bolita */
+        .interruptor {
+            position: relative;
+            width: 52px;
+            height: 30px;
+            padding: 0;
+            border: 0;
+            border-radius: 999px;
+            background-color: #a8a8b5;
+            cursor: pointer;
+        }
+        .interruptor:focus-visible {
+            outline: 3px solid #1e98cc;
+            outline-offset: 3px;
+        }
+        .bolita {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #ffffff;
+        }
+
+        /* ACTIVADO: la pista se vuelve azul y la bolita se va a la derecha */
+        .interruptor.activo {
+            background-color: #1e98cc;
+        }
+        .interruptor.activo .bolita {
+            transform: translateX(22px);
+        }
+
+        .guardar {
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            border: 0;
+            border-radius: 10px;
+            background-color: #1e98cc;
+            color: #0b0b0f;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .guardar:focus-visible {
+            outline: 3px solid #f5f2ed;
+            outline-offset: 3px;
+        }
+
+        /* El aviso empieza oculto, un poco por debajo de su sitio */
+        .aviso {
+            position: fixed;
+            left: 50%;
+            bottom: 32px;
+            width: 300px;
+            margin-left: -150px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            border-radius: 12px;
+            background-color: #3ecf8e;
+            color: #0b0b0f;
+            font-weight: bold;
+            opacity: 0;
+            transform: translateY(24px);
+            pointer-events: none;
+        }
+        .aviso.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .aviso button {
+            border: 0;
+            background: none;
+            font-size: 22px;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        /* Ahora mismo todo cambia de golpe. Tu trabajo es decidir cuánto dura cada cambio
+           y con qué curva, con las dos tablas del Tema 3.
+
+           Paso 1 · Guarda las duraciones en custom properties, en :root.
+                    Los tres interruptores tienen que comportarse igual: coherencia
+
+           Paso 2 · El interruptor: el color de la pista y el movimiento de la bolita.
+                    La bolita va y vuelve por el mismo camino: ¿qué curva le toca?
+
+           Paso 3 · El modo oscuro: el panel cambia de colores
+
+           Paso 4 · El aviso: entra (transition en .aviso.visible) y sale (transition en .aviso).
+                    Queremos que se vea, y no entra igual que sale
+
+           Paso 5 · Movimiento reducido: el aviso aparece sin desplazarse */
+
+    </style>
+</head>
+<body>
+    <section class="panel" id="panel">
+        <h1>Ajustes</h1>
+        <div class="ajuste">
+            <span>Modo oscuro</span>
+            <button type="button" class="interruptor" id="modo-oscuro"><span class="bolita"></span></button>
+        </div>
+        <div class="ajuste">
+            <span>Notificaciones</span>
+            <button type="button" class="interruptor activo"><span class="bolita"></span></button>
+        </div>
+        <div class="ajuste">
+            <span>Sonido</span>
+            <button type="button" class="interruptor"><span class="bolita"></span></button>
+        </div>
+        <button type="button" class="guardar" id="guardar">Guardar cambios</button>
+    </section>
+
+    <div class="aviso" id="aviso">
+        Cambios guardados
+        <button type="button" id="cerrar-aviso">×</button>
+    </div>
+
+    <script>
+        // El JavaScript ya está hecho: solo pone y quita clases.
+        const panel = document.querySelector('#panel');
+        const aviso = document.querySelector('#aviso');
+
+        // Cada interruptor se enciende y se apaga al pulsarlo
+        document.querySelectorAll('.interruptor').forEach(function (interruptor) {
+            interruptor.addEventListener('click', function () {
+                interruptor.classList.toggle('activo');
+            });
+        });
+
+        // El primero, además, pone y quita el modo oscuro del panel
+        document.querySelector('#modo-oscuro').addEventListener('click', function () {
+            panel.classList.toggle('oscuro');
+        });
+
+        // Guardar muestra el aviso. A los 3 segundos se va solo, o antes si pulsas la ×
+        let temporizador;
+        document.querySelector('#guardar').addEventListener('click', function () {
+            aviso.classList.add('visible');
+            clearTimeout(temporizador);
+            temporizador = setTimeout(function () {
+                aviso.classList.remove('visible');
+            }, 3000);
+        });
+        document.querySelector('#cerrar-aviso').addEventListener('click', function () {
+            aviso.classList.remove('visible');
+        });
+    </script>
+</body>
+</html>

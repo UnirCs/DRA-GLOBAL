@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ej06-start · Cada duración, un mensaje</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: flex; gap: 48px; align-items: center; justify-content: center; background: #0b0b0f; font-family: system-ui, sans-serif; color: #f5f2ed; overflow: hidden; }
+  .grupo { position: relative; }
+  .boton { padding: 16px 28px; border: 0; border-radius: 999px; background: #1e98cc; color: #0b0b0f; font-size: 18px; font-weight: 600; cursor: pointer; }
+  .boton:hover { transform: scale(1.06); }
+  .tooltip { position: absolute; left: 0; top: 72px; padding: 8px 12px; border-radius: 8px; background: #17171d; white-space: nowrap;
+    opacity: 0; transform: translateY(8px); }
+  .boton:hover + .tooltip { opacity: 1; transform: translateY(0); }
+  .panel { position: fixed; top: 0; right: 0; width: 320px; height: 100vh; padding: 32px; box-sizing: border-box; background: #f2f0e8; color: #0b0b0f;
+    transform: translateX(100%); }
+  .panel.abierto { transform: translateX(0); }
+</style>
+</head>
+<body>
+  <div class="grupo">
+    <button class="boton" id="abrir">Abrir panel</button>
+    <span class="tooltip">Hover: rápido · Tooltip: medio</span>
+  </div>
+  <aside class="panel" id="panel">
+    <p>Panel lateral: el movimiento más grande, la duración más larga.</p>
+    <button class="boton" id="cerrar">Cerrar</button>
+  </aside>
+<script>
+  const panel = document.querySelector('#panel');
+  document.querySelector('#abrir').addEventListener('click', function () { panel.classList.add('abierto'); });
+  document.querySelector('#cerrar').addEventListener('click', function () { panel.classList.remove('abierto'); });
+</script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reto 2 · Subir una foto (inicio)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #0b0b0f;
+            font-family: system-ui, sans-serif;
+            color: #f5f2ed;
+        }
+
+        .subida {
+            width: 380px;
+            padding: 28px;
+            border-radius: 20px;
+            background-color: #17171d;
+        }
+        .subida h1 {
+            margin: 0 0 20px;
+            font-size: 24px;
+        }
+
+        /* La fila del archivo: el nombre y, a la derecha, el círculo del check */
+        .archivo {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        .check {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #3ecf8e;
+            color: #0b0b0f;
+            font-size: 18px;
+            font-weight: bold;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        /* La barra de progreso: una pista y un relleno que crece desde la izquierda */
+        .pista {
+            height: 10px;
+            border-radius: 999px;
+            background-color: #2d2d38;
+            overflow: hidden;
+        }
+        .relleno {
+            height: 100%;
+            background-color: #1e98cc;
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+
+        /* Dos textos en el mismo sitio: uno antes de subir y otro al terminar */
+        .estado {
+            position: relative;
+            height: 24px;
+            margin: 12px 0 20px;
+            color: #a8a8b5;
+            font-size: 15px;
+        }
+        .estado span {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .texto-completo {
+            opacity: 0;
+        }
+
+        .boton {
+            width: 100%;
+            padding: 12px;
+            border: 0;
+            border-radius: 10px;
+            background-color: #1e98cc;
+            color: #0b0b0f;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .boton:focus-visible {
+            outline: 3px solid #f5f2ed;
+            outline-offset: 3px;
+        }
+
+        /* SUBIENDO: el JavaScript pone la clase subiendo en .subida */
+        .subiendo .relleno {
+            transform: scaleX(1);
+        }
+        .subiendo .check {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .subiendo .texto-listo {
+            opacity: 0;
+        }
+        .subiendo .texto-completo {
+            opacity: 1;
+        }
+
+        /* Ahora mismo, al pulsar el botón, todo aparece terminado de golpe.
+           Tu trabajo es encadenar tres animaciones solo con CSS, con transition-delay:
+
+           Paso 1 · Guarda las duraciones en custom properties, en :root.
+                    La de la barra (2 s) sirve también de retardo para lo que va después
+
+           Paso 2 · La barra se llena a ritmo constante: ¿qué curva de la Tabla 2 es?
+
+           Paso 3 · Al pulsar, «Lista para subir» desaparece enseguida: la barra ya cuenta lo que pasa
+
+           Paso 4 · Cuando la barra termina, aparece el check. Queremos que se note:
+                    con un cubic-bezier que se pase un poco de tamaño y vuelva.
+                    Justo después, «Subida completa»
+
+           Paso 5 · Al pulsar «Subir otra», todo vuelve a su sitio rápido y a la vez, sin esperas
+
+           Paso 6 · Movimiento reducido: el check aparece sin crecer */
+
+    </style>
+</head>
+<body>
+    <section class="subida" id="subida">
+        <h1>Subir una foto</h1>
+        <div class="archivo">
+            <span>vacaciones-cadiz.jpg</span>
+            <span class="check">✓</span>
+        </div>
+        <div class="pista"><div class="relleno"></div></div>
+        <div class="estado">
+            <span class="texto-listo">Lista para subir</span>
+            <span class="texto-completo">Subida completa</span>
+        </div>
+        <button type="button" class="boton" id="boton">Subir foto</button>
+    </section>
+
+    <script>
+        // El JavaScript ya está hecho: pone y quita la clase subiendo y cambia el texto del botón.
+        const subida = document.querySelector('#subida');
+        const boton = document.querySelector('#boton');
+
+        boton.addEventListener('click', function () {
+            subida.classList.toggle('subiendo');
+            if (subida.classList.contains('subiendo')) {
+                boton.textContent = 'Subir otra';
+            } else {
+                boton.textContent = 'Subir foto';
+            }
+        });
+    </script>
+</body>
+</html>

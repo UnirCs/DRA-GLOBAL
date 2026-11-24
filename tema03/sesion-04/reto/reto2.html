@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reto 2 · Subir una foto (solución)</title>
+    <style>
+        /* Paso 1 · Las duraciones, en un solo sitio */
+        :root {
+            --dur-carga: 2s;        /* lo que tarda la subida simulada; también es el retardo de lo que va después */
+            --dur-check: 400ms;     /* animación enfatizada: 400–800 ms (Tabla 1) */
+            --dur-texto: 250ms;     /* un texto que aparece: 200–250 ms */
+            --dur-vuelta: 150ms;    /* volver al principio: rápido y sin esperas */
+            --espera-texto: 2150ms; /* el texto final llega justo después del check */
+            --rebote: cubic-bezier(0.34, 1.56, 0.64, 1); /* se pasa un poco de tamaño y vuelve */
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #0b0b0f;
+            font-family: system-ui, sans-serif;
+            color: #f5f2ed;
+        }
+
+        .subida {
+            width: 380px;
+            padding: 28px;
+            border-radius: 20px;
+            background-color: #17171d;
+        }
+        .subida h1 {
+            margin: 0 0 20px;
+            font-size: 24px;
+        }
+
+        /* La fila del archivo: el nombre y, a la derecha, el círculo del check */
+        .archivo {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        .check {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #3ecf8e;
+            color: #0b0b0f;
+            font-size: 18px;
+            font-weight: bold;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        /* La barra de progreso: una pista y un relleno que crece desde la izquierda */
+        .pista {
+            height: 10px;
+            border-radius: 999px;
+            background-color: #2d2d38;
+            overflow: hidden;
+        }
+        .relleno {
+            height: 100%;
+            background-color: #1e98cc;
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+
+        /* Dos textos en el mismo sitio: uno antes de subir y otro al terminar */
+        .estado {
+            position: relative;
+            height: 24px;
+            margin: 12px 0 20px;
+            color: #a8a8b5;
+            font-size: 15px;
+        }
+        .estado span {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .texto-completo {
+            opacity: 0;
+        }
+
+        .boton {
+            width: 100%;
+            padding: 12px;
+            border: 0;
+            border-radius: 10px;
+            background-color: #1e98cc;
+            color: #0b0b0f;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .boton:focus-visible {
+            outline: 3px solid #f5f2ed;
+            outline-offset: 3px;
+        }
+
+        /* SUBIENDO: el JavaScript pone la clase subiendo en .subida */
+        .subiendo .relleno {
+            transform: scaleX(1);
+        }
+        .subiendo .check {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .subiendo .texto-listo {
+            opacity: 0;
+        }
+        .subiendo .texto-completo {
+            opacity: 1;
+        }
+
+        /* Paso 2 · La barra: movimiento constante, linear (Tabla 2) */
+        .subiendo .relleno {
+            transition: transform var(--dur-carga) linear;
+        }
+
+        /* Paso 3 · «Lista para subir» se va enseguida al pulsar: ease-in porque sale */
+        .subiendo .texto-listo {
+            transition: opacity var(--dur-vuelta) ease-in;
+        }
+
+        /* Paso 4 · El check espera a que termine la barra y aparece con rebote:
+           enfatizar o dramatizar, cubic-bezier (Tabla 2) */
+        .subiendo .check {
+            transition:
+                opacity var(--dur-texto) ease-out var(--dur-carga),
+                transform var(--dur-check) var(--rebote) var(--dur-carga);
+        }
+        /* «Subida completa» llega justo después del check, con ease-out porque entra */
+        .subiendo .texto-completo {
+            transition: opacity var(--dur-texto) ease-out var(--espera-texto);
+        }
+
+        /* Paso 5 · VUELTA, en el estado de partida: rápida, con ease-in y sin retardos */
+        .relleno {
+            transition: transform var(--dur-vuelta) ease-in;
+        }
+        .check {
+            transition:
+                opacity var(--dur-vuelta) ease-in,
+                transform var(--dur-vuelta) ease-in;
+        }
+        .texto-completo {
+            transition: opacity var(--dur-vuelta) ease-in;
+        }
+        /* «Lista para subir» vuelve a aparecer: ease-out porque entra */
+        .texto-listo {
+            transition: opacity var(--dur-texto) ease-out;
+        }
+
+        /* Paso 6 · Movimiento reducido: el check aparece sin crecer, solo con la opacidad */
+        @media (prefers-reduced-motion: reduce) {
+            .check,
+            .subiendo .check {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="subida" id="subida">
+        <h1>Subir una foto</h1>
+        <div class="archivo">
+            <span>vacaciones-cadiz.jpg</span>
+            <span class="check">✓</span>
+        </div>
+        <div class="pista"><div class="relleno"></div></div>
+        <div class="estado">
+            <span class="texto-listo">Lista para subir</span>
+            <span class="texto-completo">Subida completa</span>
+        </div>
+        <button type="button" class="boton" id="boton">Subir foto</button>
+    </section>
+
+    <script>
+        // El JavaScript ya está hecho: pone y quita la clase subiendo y cambia el texto del botón.
+        const subida = document.querySelector('#subida');
+        const boton = document.querySelector('#boton');
+
+        boton.addEventListener('click', function () {
+            subida.classList.toggle('subiendo');
+            if (subida.classList.contains('subiendo')) {
+                boton.textContent = 'Subir otra';
+            } else {
+                boton.textContent = 'Subir foto';
+            }
+        });
+    </script>
+</body>
+</html>
